@@ -30,7 +30,14 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Personal User Page")),
+      appBar: AppBar(
+        title: Text(
+          "Personal User Page",
+          style: TextStyle(
+              color: Colors.green, fontSize: 30, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color.fromARGB(255, 235, 225, 225),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -73,6 +80,25 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
                 decoration: InputDecoration(
                   labelText: 'Enter the amount Materil you Want to check.',
                   border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 60,
+                width: 60,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    backgroundColor: Colors.green),
+                onPressed: () {},
+                child: Text(
+                  "Submite",
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
                 ),
               ),
             ],
