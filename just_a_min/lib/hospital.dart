@@ -35,6 +35,7 @@ class _HospitalPageState extends State<Hospital_page> {
           child: Column(
             children: [
               TextField(
+                maxLines: 100,
                 controller: _hospitalNameController,
                 decoration: InputDecoration(
                   labelText: 'Enter The Hospital name',
