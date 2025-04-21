@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'personal_user.dart';
 import 'Company.dart';
-// import 'Screens/Splash_screen.dart';
+import 'Screens/Splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,19 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '0 Waste Hub App!!',
-      theme: ThemeData(
-        colorSchemeSeed: Colors.indigo,
-        useMaterial3: true,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        useMaterial3: true,
-        brightness: Brightness.dark,
-      ),
-      home: MyHomePage(
-        title: "0 Waste Hub App",
-      ),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

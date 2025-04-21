@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'challenges_result.dart';
 import 'team_result.dart';
+import 'screens/splashscreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,9 +19,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(
-        title: 'Flutter Home Page',
-      ),
+      home: SplashScreen(),
+      //const MyHomePage(
+      //   title: 'Flutter Home Page',
+      // ),
       debugShowCheckedModeBanner: false,
     );
   }

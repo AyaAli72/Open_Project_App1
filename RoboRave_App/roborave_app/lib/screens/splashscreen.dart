@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test1/main.dart'; // MyHomePage should be in a separate file
+import 'package:roborave_app/main.dart'; // MyHomePage should be in a separate file
 
 class SplashScreen extends StatelessWidget {
   @override
@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      body: _buildSplashContent(),
+      body: _buildSplashContent(context),
     );
   }
 
@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => const MyHomePage(title: '0 Waste Hub'),
+          builder: (_) => const MyHomePage(title: 'RoboRave Egypt'),
         ),
       );
     } catch (e) {
@@ -30,12 +30,16 @@ class SplashScreen extends StatelessWidget {
     }
   }
 
-  Widget _buildSplashContent() {
+  Widget _buildSplashContent(BuildContext context) {
     try {
-      return Center(
+      return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height, // Full height of the screen
+        color: Color.fromARGB(255, 153, 121, 121),
         child: Image.asset(
           'assets/images/image1.png',
-          errorBuilder: (_, __, ___) => const Placeholder(), // Fallback widget
+          fit: BoxFit.contain, // Show full image without cropping
+          errorBuilder: (_, __, ___) => const Placeholder(),
         ),
       );
     } catch (e) {
