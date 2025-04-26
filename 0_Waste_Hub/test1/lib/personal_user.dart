@@ -16,7 +16,8 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
       TextEditingController();
   final TextEditingController _personalUserMaterialAmountController =
       TextEditingController();
-
+final TextEditingController _personalUserMaterialPriceController =
+      TextEditingController();
   @override
   void dispose() {
     _personalUserNameController.dispose();
@@ -24,6 +25,7 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
     _personalUseremailController.dispose();
     _personalUserMaterialController.dispose();
     _personalUserMaterialAmountController.dispose();
+    _personalUserMaterialPriceController.dispose();
     super.dispose(); // Don't forget this!
   }
 
@@ -70,7 +72,7 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
               TextField(
                 controller: _personalUserMaterialController,
                 decoration: InputDecoration(
-                  labelText: 'Enter the Materil you Want to check.',
+                  labelText: 'Enter the Materil you Have.',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -78,7 +80,17 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
               TextField(
                 controller: _personalUserMaterialAmountController,
                 decoration: InputDecoration(
-                  labelText: 'Enter the amount Materil you Want to check.',
+                  labelText: 'Enter the amount Materil you Have.',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: _personalUserMaterialPriceController,
+                decoration: InputDecoration(
+                  labelText: 'Enter the Price for this Materil.',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -94,7 +106,7 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
                     backgroundColor: Colors.green),
                 onPressed: () {},
                 child: Text(
-                  "Submite",
+                  "Submit",
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,

@@ -10,18 +10,12 @@ class _CompanyPageState extends State<CompanyPage> {
       TextEditingController();
   final TextEditingController _companyPhoneController = TextEditingController();
   final TextEditingController _companyemailController = TextEditingController();
-  final TextEditingController _companyMaterialController =
-      TextEditingController();
-  final TextEditingController _companyMaterialAmountController =
-      TextEditingController();
 
   @override
   void dispose() {
     _companyPageNameController.dispose();
     _companyPhoneController.dispose();
     _companyemailController.dispose();
-    _companyMaterialController.dispose();
-    _companyMaterialAmountController.dispose();
     super.dispose(); // Don't forget this!
   }
 
@@ -32,7 +26,7 @@ class _CompanyPageState extends State<CompanyPage> {
           title: Text(
             "Company Page",
             style: TextStyle(
-                color: Colors.green, fontSize:30, fontWeight: FontWeight.bold),
+                color: Colors.green, fontSize: 30, fontWeight: FontWeight.bold),
           ),
           backgroundColor: const Color.fromARGB(255, 230, 224, 224)),
       body: SingleChildScrollView(
@@ -43,7 +37,7 @@ class _CompanyPageState extends State<CompanyPage> {
               TextField(
                 controller: _companyPageNameController,
                 decoration: InputDecoration(
-                  labelText: 'Enter your name',
+                  labelText: 'Enter Company name',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -64,26 +58,6 @@ class _CompanyPageState extends State<CompanyPage> {
                 ),
               ),
               SizedBox(height: 20),
-              TextField(
-                maxLines: 10,
-                controller: _companyMaterialController,
-                decoration: InputDecoration(
-                  labelText: 'Enter the Materil you Want to check.',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _companyMaterialAmountController,
-                decoration: InputDecoration(
-                  labelText: 'Enter the amount Materil you Want to check.',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(
-                height: 60,
-                width: 60,
-              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.all(20),
@@ -92,7 +66,7 @@ class _CompanyPageState extends State<CompanyPage> {
                     backgroundColor: Colors.green),
                 onPressed: () {},
                 child: Text(
-                  "Submite",
+                  "Submit",
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
