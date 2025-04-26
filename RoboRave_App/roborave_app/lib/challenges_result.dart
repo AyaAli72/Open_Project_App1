@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'googlesheetapi.dart';
+import 'Challenges_Rank/sumocup.dart';
+import 'Challenges_Rank/maze_solver.dart';
+import 'Challenges_Rank/line_follower.dart';
+import 'Challenges_Rank/fire_fighter.dart';
+import 'Challenges_Rank/airpline.dart';
+import 'Challenges_Rank/fastbot.dart';
+import 'Challenges_Rank/preschool.dart';
+import 'Challenges_Rank/Enterpreneurs.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: '.env'); // Must be before runApp()
-  runApp(MaterialApp(
+  await dotenv.load(fileName: '.env');
+  runApp(const MaterialApp(
     home: ChallengeResultPage(),
     debugShowCheckedModeBanner: false,
   ));
@@ -111,119 +119,4 @@ class _ChallengeResultPageState extends State<ChallengeResultPage> {
       ),
     );
   }
-}
-
-// Challenge Pages
-
-class SumoCupPage extends StatefulWidget {
-  const SumoCupPage({super.key});
-
-  @override
-  State<SumoCupPage> createState() => _SumoCupPageState();
-}
-
-class _SumoCupPageState extends State<SumoCupPage> {
-  List<List<String>> sheetData = [];
-  bool isLoading = true;
-  String errorMessage = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchSheetData();
-  }
-
-  Future<void> _fetchSheetData() async {
-    try {
-      const spreadsheetId =
-          '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic'; // Replace with your ID
-      const range = 'RoboRaveEgyptResultsScoreSheet!A3:C3';
-
-      final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
-      setState(() {
-        sheetData = data;
-        isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Error loading data: $e';
-        isLoading = false;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Sumo Cup Challenge")),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : errorMessage.isNotEmpty
-              ? Center(child: Text(errorMessage))
-              : ListView.builder(
-                  itemCount: sheetData.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(sheetData[index].join(' | ')),
-                    );
-                  },
-                ),
-    );
-  }
-}
-
-class MazeSolverPage extends StatelessWidget {
-  const MazeSolverPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => _buildChallengePage("Maze Solver");
-}
-
-class FireFighterPage extends StatelessWidget {
-  const FireFighterPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => _buildChallengePage("Fire Fighter");
-}
-
-class LineFollowerPage extends StatelessWidget {
-  const LineFollowerPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => _buildChallengePage("Maze Solver");
-}
-
-class AirplinePage extends StatelessWidget {
-  const AirplinePage({super.key});
-
-  @override
-  Widget build(BuildContext context) => _buildChallengePage("Fire Fighter");
-}
-
-class FastbotPage extends StatelessWidget {
-  const FastbotPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => _buildChallengePage("Maze Solver");
-}
-
-class PreschoolPage extends StatelessWidget {
-  const PreschoolPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => _buildChallengePage("Maze Solver");
-}
-
-class EnterpreneursPage extends StatelessWidget {
-  const EnterpreneursPage({super.key});
-
-  @override
-  Widget build(BuildContext context) => _buildChallengePage("Maze Solver");
-}
-
-Widget _buildChallengePage(String title) {
-  return Scaffold(
-    appBar: AppBar(title: Text("$title Challenge")),
-    body: const Center(child: Text("Challenge data will be displayed here")),
-  );
 }
