@@ -22,7 +22,7 @@ class _MazeSolverPageState extends State<MazeSolverPage> {
   Future<void> _fetchSheetData() async {
     try {
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'RoboRaveEgyptResultsScoreSheet!A93:F111';
+      const range = 'MazeSolver!A3:C21';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -41,11 +41,15 @@ class _MazeSolverPageState extends State<MazeSolverPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Maze Solver Challenge")),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : errorMessage.isNotEmpty
-              ? Center(child: Text(errorMessage))
-              : _buildDataTable(),
+      body: Column(children: [
+        Center(
+          child: isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : errorMessage.isNotEmpty
+                  ? Center(child: Text(errorMessage))
+                  : _buildDataTable(),
+        ),
+      ]),
     );
   }
 
@@ -75,9 +79,7 @@ class _MazeSolverPageState extends State<MazeSolverPage> {
               ? 'Team'
               : index == 1
                   ? 'Rank'
-                  : index == 2
-                      ? 'Score'
-                      : 'Round ${index - 2}',
+                  : 'Round',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         numeric: index > 0,
@@ -97,3 +99,6 @@ class _MazeSolverPageState extends State<MazeSolverPage> {
     }).toList();
   }
 }
+
+
+ 

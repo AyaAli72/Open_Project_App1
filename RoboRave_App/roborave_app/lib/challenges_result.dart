@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'googlesheetapi.dart';
 import 'Challenges_Rank/sumocup.dart';
 import 'Challenges_Rank/maze_solver.dart';
 import 'Challenges_Rank/line_follower.dart';
@@ -9,6 +8,7 @@ import 'Challenges_Rank/airpline.dart';
 import 'Challenges_Rank/fastbot.dart';
 import 'Challenges_Rank/preschool.dart';
 import 'Challenges_Rank/Enterpreneurs.dart';
+
 
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
@@ -40,7 +40,7 @@ class _ChallengeResultPageState extends State<ChallengeResultPage> {
 
   void navigateToChallenge(String value) {
     final pages = {
-      'Sumo Cup': const SumoCupPage(),
+      'Sumo Cup MS': const SumoCupPage(),
       'Maze Solver': const MazeSolverPage(),
       'Fire Fighter': const FireFighterPage(),
       'Line Follower': const LineFollowerPage(),

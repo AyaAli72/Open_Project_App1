@@ -22,7 +22,7 @@ class _FireFighterPageState extends State<FireFighterPage> {
   Future<void> _fetchSheetData() async {
     try {
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'RoboRaveEgyptResultsScoreSheet!A39:F57';
+      const range = 'FireFighter!A3:C21';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -40,13 +40,18 @@ class _FireFighterPageState extends State<FireFighterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Fire Fighter Challenge")),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : errorMessage.isNotEmpty
-              ? Center(child: Text(errorMessage))
-              : _buildDataTable(),
-    );
+        appBar: AppBar(title: const Text("Fire Fighter Challenge")),
+        body: Column(
+          children: [
+            Center(
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : errorMessage.isNotEmpty
+                      ? Center(child: Text(errorMessage))
+                      : _buildDataTable(),
+            )
+          ],
+        ));
   }
 
   Widget _buildDataTable() {
@@ -68,16 +73,13 @@ class _FireFighterPageState extends State<FireFighterPage> {
 
     return sheetData[0].asMap().entries.map((entry) {
       final index = entry.key;
-      final value = entry.value;
       return DataColumn(
         label: Text(
           index == 0
               ? 'Team'
               : index == 1
                   ? 'Rank'
-                  : index == 2
-                      ? 'Score'
-                      : 'Round ${index - 2}',
+                  : 'Round',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         numeric: index > 0,
@@ -97,3 +99,4 @@ class _FireFighterPageState extends State<FireFighterPage> {
     }).toList();
   }
 }
+

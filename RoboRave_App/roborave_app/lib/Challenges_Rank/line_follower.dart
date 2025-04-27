@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '/googlesheetapi.dart';
 
 class LineFollowerPage extends StatefulWidget {
@@ -23,7 +22,7 @@ class _LineFollowerPageState extends State<LineFollowerPage> {
   Future<void> _fetchSheetData() async {
     try {
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'RoboRaveEgyptResultsScoreSheet!A66:F84';
+      const range = 'LineFollower!A3:C21';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -42,11 +41,17 @@ class _LineFollowerPageState extends State<LineFollowerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Line Follower Challenge")),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : errorMessage.isNotEmpty
-              ? Center(child: Text(errorMessage))
-              : _buildDataTable(),
+      body: Column(
+        children: [
+          Center(
+            child: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : errorMessage.isNotEmpty
+                    ? Center(child: Text(errorMessage))
+                    : _buildDataTable(),
+          )
+        ],
+      ),
     );
   }
 
@@ -69,16 +74,13 @@ class _LineFollowerPageState extends State<LineFollowerPage> {
 
     return sheetData[0].asMap().entries.map((entry) {
       final index = entry.key;
-      final value = entry.value;
       return DataColumn(
         label: Text(
           index == 0
               ? 'Team'
               : index == 1
                   ? 'Rank'
-                  : index == 2
-                      ? 'Score'
-                      : 'Round ${index - 2}',
+                  : 'Round',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         numeric: index > 0,

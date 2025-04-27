@@ -22,8 +22,7 @@ class _SumoCupPageState extends State<SumoCupPage> {
   Future<void> _fetchSheetData() async {
     try {
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range =
-          'RoboRaveEgyptResultsScoreSheet!A3:F15'; // Read multiple rows
+      const range = 'SumoCup!A3:C21'; // Read multiple rows
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -41,13 +40,18 @@ class _SumoCupPageState extends State<SumoCupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Sumo Cup Challenge")),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : errorMessage.isNotEmpty
-              ? Center(child: Text(errorMessage))
-              : _buildDataTable(),
-    );
+        appBar: AppBar(title: const Text("Sumo Cup Challenge")),
+        body: Column(
+          children: [
+            Center(
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : errorMessage.isNotEmpty
+                      ? Center(child: Text(errorMessage))
+                      : _buildDataTable(),
+            ),
+          ],
+        ));
   }
 
   Widget _buildDataTable() {
@@ -69,16 +73,13 @@ class _SumoCupPageState extends State<SumoCupPage> {
 
     return sheetData[0].asMap().entries.map((entry) {
       final index = entry.key;
-      final value = entry.value;
       return DataColumn(
         label: Text(
           index == 0
               ? 'Team'
               : index == 1
                   ? 'Rank'
-                  : index == 2
-                      ? 'Score'
-                      : 'Round ${index - 2}',
+                  : 'Round ',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         numeric: index > 0,
