@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter',
+      title: 'RoboRave',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -74,28 +74,28 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             SizedBox(height: 50, width: 50),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TeamResultPage()));
-              },
-              child: Text(
-                "Team Result",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
-              ),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 69, vertical: 30),
-                backgroundColor: const Color.fromARGB(255, 156, 15, 5),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => TeamResultPage()));
+            //   },
+            //   child: Text(
+            //     "Team Result",
+            //     style: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 30,
+            //         fontWeight: FontWeight.bold),
+            //   ),
+            //   style: ElevatedButton.styleFrom(
+            //     padding: EdgeInsets.symmetric(horizontal: 69, vertical: 30),
+            //     backgroundColor: const Color.fromARGB(255, 156, 15, 5),
+            //     shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(15),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

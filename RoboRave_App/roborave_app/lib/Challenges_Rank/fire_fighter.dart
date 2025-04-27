@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
-import '/googlesheetapi.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'Category_Challenges/firfighter_challenges.dart';
+
+Future<void> main() async {
+  await dotenv.load(fileName: '.env');
+  runApp(const MaterialApp(
+    home: FireFighterPage(),
+    debugShowCheckedModeBanner: false,
+  ));
+}
 
 class FireFighterPage extends StatefulWidget {
   const FireFighterPage({super.key});
@@ -9,94 +18,87 @@ class FireFighterPage extends StatefulWidget {
 }
 
 class _FireFighterPageState extends State<FireFighterPage> {
-  List<List<String>> sheetData = [];
-  bool isLoading = true;
-  String errorMessage = '';
+  String selectedOption = 'Fire Fighter MS';
+  final List<String> challenges = [
+    'Fire Fighter MS',
+    'Fire Fighter HS',
+    'Fire Fighter UP',
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchSheetData();
-  }
+  void navigateToChallenge(String value) {
+    final pages = {
+      'Fire Fighter MS': const FireFighterMSPage(),
+      'Fire Fighter HS': const FireFighterHSPage(),
+      'Fire Fighter UP': const FireFighterUPPage(),
+    };
 
-  Future<void> _fetchSheetData() async {
-    try {
-      const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'FireFighter!A3:C21';
-
-      final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
-      setState(() {
-        sheetData = data;
-        isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Error loading data: $e';
-        isLoading = false;
-      });
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => pages[value] ?? const FireFighterMSPage()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Fire Fighter Challenge")),
-        body: Column(
-          children: [
-            Center(
-              child: isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : errorMessage.isNotEmpty
-                      ? Center(child: Text(errorMessage))
-                      : _buildDataTable(),
-            )
-          ],
-        ));
-  }
-
-  Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
-      return const Center(child: Text("No data available"));
-    }
-
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        columns: _buildColumns(),
-        rows: _buildRows(),
+      appBar: AppBar(
+        title: const Text(
+          "Challenges Rank Page",
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color.fromARGB(255, 160, 27, 17),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DropdownButton<String>(
+                  value: selectedOption,
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      setState(() => selectedOption = newValue);
+                    }
+                  },
+                  dropdownColor: Colors.white,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  items:
+                      challenges.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () => navigateToChallenge(selectedOption),
+                  child: const Text(
+                    "Go to Challenge Rank",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 160, 27, 17),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
-
-  List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
-  }
-
-  List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
-      return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
-      );
-    }).toList();
-  }
 }
-
