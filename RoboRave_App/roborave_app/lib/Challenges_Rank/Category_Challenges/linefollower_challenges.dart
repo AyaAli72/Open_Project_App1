@@ -21,8 +21,13 @@ class _LineFollowerMSPageState extends State<LineFollowerMSPage> {
 
   Future<void> _fetchSheetData() async {
     try {
+      setState(() {
+        isLoading = true;
+        errorMessage = '';
+      });
+      
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'LineFollower!A2:C21';
+      const range = 'LineFollower!A2:D21'; // Updated to include Team Name column
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -41,24 +46,18 @@ class _LineFollowerMSPageState extends State<LineFollowerMSPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Line Follower MS Challenge")),
-      body: Column(
-        children: [
-          Center(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMessage.isNotEmpty
-                    ? Center(child: Text(errorMessage))
-                    : _buildDataTable(),
-          ),
-        ],
-      ),
+      body: _buildBody(),
     );
   }
 
+  Widget _buildBody() {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
+    return _buildDataTable();
+  }
+
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
-      return const Center(child: Text("No data available"));
-    }
+    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -70,32 +69,29 @@ class _LineFollowerMSPageState extends State<LineFollowerMSPage> {
   }
 
   List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
+    return const [
+      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+      DataColumn(
+        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+    ];
   }
 
   List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
+        cells: [
+          DataCell(Text(row[0].toString())),
+          DataCell(Text(row[1].toString())),
+          DataCell(Text(row[2].toString())),
+          DataCell(Text(row[3].toString())),
+        ],
       );
     }).toList();
   }
@@ -121,8 +117,13 @@ class _LineFollowerHSPageState extends State<LineFollowerHSPage> {
 
   Future<void> _fetchSheetData() async {
     try {
+      setState(() {
+        isLoading = true;
+        errorMessage = '';
+      });
+      
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'LineFollower!E2:G21';
+      const range = 'LineFollower!F2:I21'; // Updated range for HS
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -141,24 +142,18 @@ class _LineFollowerHSPageState extends State<LineFollowerHSPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Line Follower HS Challenge")),
-      body: Column(
-        children: [
-          Center(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMessage.isNotEmpty
-                    ? Center(child: Text(errorMessage))
-                    : _buildDataTable(),
-          ),
-        ],
-      ),
+      body: _buildBody(),
     );
   }
 
+  Widget _buildBody() {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
+    return _buildDataTable();
+  }
+
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
-      return const Center(child: Text("No data available"));
-    }
+    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -170,32 +165,29 @@ class _LineFollowerHSPageState extends State<LineFollowerHSPage> {
   }
 
   List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
+    return const [
+      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+      DataColumn(
+        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+    ];
   }
 
   List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
+        cells: [
+          DataCell(Text(row[0].toString())),
+          DataCell(Text(row[1].toString())),
+          DataCell(Text(row[2].toString())),
+          DataCell(Text(row[3].toString())),
+        ],
       );
     }).toList();
   }
@@ -221,8 +213,13 @@ class _LineFollowerESPageState extends State<LineFollowerESPage> {
 
   Future<void> _fetchSheetData() async {
     try {
+      setState(() {
+        isLoading = true;
+        errorMessage = '';
+      });
+      
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'LineFollower!I2:K21';
+      const range = 'LineFollower!K2:N21'; // Updated range for ES
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -241,24 +238,18 @@ class _LineFollowerESPageState extends State<LineFollowerESPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Line Follower ES Challenge")),
-      body: Column(
-        children: [
-          Center(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMessage.isNotEmpty
-                    ? Center(child: Text(errorMessage))
-                    : _buildDataTable(),
-          ),
-        ],
-      ),
+      body: _buildBody(),
     );
   }
 
+  Widget _buildBody() {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
+    return _buildDataTable();
+  }
+
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
-      return const Center(child: Text("No data available"));
-    }
+    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -270,32 +261,29 @@ class _LineFollowerESPageState extends State<LineFollowerESPage> {
   }
 
   List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
+    return const [
+      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+      DataColumn(
+        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+    ];
   }
 
   List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
+        cells: [
+          DataCell(Text(row[0].toString())),
+          DataCell(Text(row[1].toString())),
+          DataCell(Text(row[2].toString())),
+          DataCell(Text(row[3].toString())),
+        ],
       );
     }).toList();
   }

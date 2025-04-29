@@ -9,7 +9,6 @@ import 'Challenges_Rank/fastbot.dart';
 import 'Challenges_Rank/preschool.dart';
 import 'Challenges_Rank/Enterpreneurs.dart';
 
-
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
   runApp(const MaterialApp(
@@ -35,7 +34,7 @@ class _ChallengeResultPageState extends State<ChallengeResultPage> {
     'Airpline',
     'Fastbot',
     'Preshcool',
-    'Enterpreneurs(open project)'
+    'Enterpreneurs'
   ];
 
   void navigateToChallenge(String value) {
@@ -47,7 +46,7 @@ class _ChallengeResultPageState extends State<ChallengeResultPage> {
       'Airpline': const AirplinePage(),
       'Fastbot': const FastbotPage(),
       'Preshcool': const PreschoolPage(),
-      'Enterpreneurs(open project)': const EnterpreneursPage(),
+      'Enterpreneurs': const EnterpreneursPage(),
     };
 
     Navigator.push(

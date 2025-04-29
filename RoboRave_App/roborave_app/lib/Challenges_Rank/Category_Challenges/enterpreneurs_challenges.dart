@@ -21,8 +21,13 @@ class _EnterpreneursMSPageState extends State<EnterpreneursMSPage> {
 
   Future<void> _fetchSheetData() async {
     try {
+      setState(() {
+        isLoading = true;
+        errorMessage = '';
+      });
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!A2:C21';
+      const range = 'Enterpreneurs!A2:D21';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -40,25 +45,21 @@ class _EnterpreneursMSPageState extends State<EnterpreneursMSPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Enterpreneurs MS Challenge")),
-      body: Column(
-        children: [
-          Center(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMessage.isNotEmpty
-                    ? Center(child: Text(errorMessage))
-                    : _buildDataTable(),
-          ),
-        ],
-      ),
+      appBar: AppBar(
+          title: const Text("Entrepreneurs MS Challenge")), // Fixed spelling
+      body: _buildBody(),
     );
   }
 
+  Widget _buildBody() {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
+    return _buildDataTable();
+  }
+
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
+    if (sheetData.isEmpty)
       return const Center(child: Text("No data available"));
-    }
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -70,32 +71,33 @@ class _EnterpreneursMSPageState extends State<EnterpreneursMSPage> {
   }
 
   List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
+    return const [
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+      DataColumn(
+        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+    ];
   }
 
   List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
+        cells: [
+          DataCell(Text(row[0].toString())),
+          DataCell(Text(row[1].toString())),
+          DataCell(Text(row[2].toString())),
+          DataCell(Text(row[3].toString())),
+        ],
       );
     }).toList();
   }
@@ -121,8 +123,13 @@ class _EnterpreneursHSPageState extends State<EnterpreneursHSPage> {
 
   Future<void> _fetchSheetData() async {
     try {
+      setState(() {
+        isLoading = true;
+        errorMessage = '';
+      });
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!E2:G21';
+      const range = 'Enterpreneurs!F2:I21'; // Fixed range to match 4 columns
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -140,25 +147,21 @@ class _EnterpreneursHSPageState extends State<EnterpreneursHSPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Enterpreneurs HS Challenge")),
-      body: Column(
-        children: [
-          Center(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMessage.isNotEmpty
-                    ? Center(child: Text(errorMessage))
-                    : _buildDataTable(),
-          ),
-        ],
-      ),
+      appBar: AppBar(
+          title: const Text("Entrepreneurs HS Challenge")), // Fixed spelling
+      body: _buildBody(),
     );
   }
 
+  Widget _buildBody() {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
+    return _buildDataTable();
+  }
+
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
+    if (sheetData.isEmpty)
       return const Center(child: Text("No data available"));
-    }
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -170,32 +173,33 @@ class _EnterpreneursHSPageState extends State<EnterpreneursHSPage> {
   }
 
   List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
+    return const [
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+      DataColumn(
+        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+    ];
   }
 
   List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
+        cells: [
+          DataCell(Text(row[0].toString())),
+          DataCell(Text(row[1].toString())),
+          DataCell(Text(row[2].toString())),
+          DataCell(Text(row[3].toString())),
+        ],
       );
     }).toList();
   }
@@ -221,8 +225,13 @@ class _EnterpreneursESPageState extends State<EnterpreneursESPage> {
 
   Future<void> _fetchSheetData() async {
     try {
+      setState(() {
+        isLoading = true;
+        errorMessage = '';
+      });
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!I2:K21';
+      const range = 'Enterpreneurs!K2:N21';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -240,25 +249,21 @@ class _EnterpreneursESPageState extends State<EnterpreneursESPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Enterpreneurs ES Challenge")),
-      body: Column(
-        children: [
-          Center(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMessage.isNotEmpty
-                    ? Center(child: Text(errorMessage))
-                    : _buildDataTable(),
-          ),
-        ],
-      ),
+      appBar: AppBar(
+          title: const Text("Entrepreneurs ES Challenge")), // Fixed spelling
+      body: _buildBody(),
     );
   }
 
+  Widget _buildBody() {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
+    return _buildDataTable();
+  }
+
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
+    if (sheetData.isEmpty)
       return const Center(child: Text("No data available"));
-    }
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -270,32 +275,33 @@ class _EnterpreneursESPageState extends State<EnterpreneursESPage> {
   }
 
   List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
+    return const [
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+      DataColumn(
+        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+    ];
   }
 
   List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
+        cells: [
+          DataCell(Text(row[0].toString())),
+          DataCell(Text(row[1].toString())),
+          DataCell(Text(row[2].toString())),
+          DataCell(Text(row[3].toString())),
+        ],
       );
     }).toList();
   }
@@ -321,8 +327,13 @@ class _EnterpreneursUPPageState extends State<EnterpreneursUPPage> {
 
   Future<void> _fetchSheetData() async {
     try {
+      setState(() {
+        isLoading = true;
+        errorMessage = '';
+      });
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!M2:O21';
+      const range = 'Enterpreneurs!P2:S21';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -340,25 +351,21 @@ class _EnterpreneursUPPageState extends State<EnterpreneursUPPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Enterpreneurs UP Challenge")),
-      body: Column(
-        children: [
-          Center(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMessage.isNotEmpty
-                    ? Center(child: Text(errorMessage))
-                    : _buildDataTable(),
-          ),
-        ],
-      ),
+      appBar: AppBar(
+          title: const Text("Entrepreneurs UP Challenge")), // Fixed spelling
+      body: _buildBody(),
     );
   }
 
+  Widget _buildBody() {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
+    return _buildDataTable();
+  }
+
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
+    if (sheetData.isEmpty)
       return const Center(child: Text("No data available"));
-    }
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -370,32 +377,33 @@ class _EnterpreneursUPPageState extends State<EnterpreneursUPPage> {
   }
 
   List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
+    return const [
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+      DataColumn(
+        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+    ];
   }
 
   List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
+        cells: [
+          DataCell(Text(row[0].toString())),
+          DataCell(Text(row[1].toString())),
+          DataCell(Text(row[2].toString())),
+          DataCell(Text(row[3].toString())),
+        ],
       );
     }).toList();
   }

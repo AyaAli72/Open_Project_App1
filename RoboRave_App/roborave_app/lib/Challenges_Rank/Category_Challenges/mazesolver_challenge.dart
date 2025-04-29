@@ -21,8 +21,13 @@ class _MazeSolverMSPageState extends State<MazeSolverMSPage> {
 
   Future<void> _fetchSheetData() async {
     try {
+      setState(() {
+        isLoading = true;
+        errorMessage = '';
+      });
+      
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'MazeSolver!A2:C21';
+      const range = 'MazeSolver!A2:D21'; // Updated to 4 columns
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -40,25 +45,19 @@ class _MazeSolverMSPageState extends State<MazeSolverMSPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("MazeSolver MS Challenge")),
-      body: Column(
-        children: [
-          Center(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMessage.isNotEmpty
-                    ? Center(child: Text(errorMessage))
-                    : _buildDataTable(),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text("Maze Solver MS Challenge")), // Fixed title spacing
+      body: _buildBody(),
     );
   }
 
+  Widget _buildBody() {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
+    return _buildDataTable();
+  }
+
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
-      return const Center(child: Text("No data available"));
-    }
+    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -70,32 +69,29 @@ class _MazeSolverMSPageState extends State<MazeSolverMSPage> {
   }
 
   List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
+    return const [
+      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+      DataColumn(
+        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+    ];
   }
 
   List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
+        cells: [
+          DataCell(Text(row[0].toString())),
+          DataCell(Text(row[1].toString())),
+          DataCell(Text(row[2].toString())),
+          DataCell(Text(row[3].toString())),
+        ],
       );
     }).toList();
   }
@@ -121,8 +117,13 @@ class _MazeSolverESPageState extends State<MazeSolverESPage> {
 
   Future<void> _fetchSheetData() async {
     try {
+      setState(() {
+        isLoading = true;
+        errorMessage = '';
+      });
+      
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'MazeSolver!E2:G21';
+      const range = 'MazeSolver!F2:I21'; // Updated to 4 columns
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -140,25 +141,19 @@ class _MazeSolverESPageState extends State<MazeSolverESPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Maze Solver HS Challenge")),
-      body: Column(
-        children: [
-          Center(
-            child: isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : errorMessage.isNotEmpty
-                    ? Center(child: Text(errorMessage))
-                    : _buildDataTable(),
-          ),
-        ],
-      ),
+      appBar: AppBar(title: const Text("Maze Solver ES Challenge")), // Fixed title
+      body: _buildBody(),
     );
   }
 
+  Widget _buildBody() {
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
+    return _buildDataTable();
+  }
+
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) {
-      return const Center(child: Text("No data available"));
-    }
+    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -170,34 +165,30 @@ class _MazeSolverESPageState extends State<MazeSolverESPage> {
   }
 
   List<DataColumn> _buildColumns() {
-    if (sheetData.isEmpty) return [];
-
-    return sheetData[0].asMap().entries.map((entry) {
-      final index = entry.key;
-      return DataColumn(
-        label: Text(
-          index == 0
-              ? 'Team'
-              : index == 1
-                  ? 'Rank'
-                  : 'Round',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        numeric: index > 0,
-      );
-    }).toList();
+    return const [
+      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+      DataColumn(
+        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        numeric: true,
+      ),
+    ];
   }
 
   List<DataRow> _buildRows() {
-    if (sheetData.length <= 1) return [];
-
-    return sheetData.sublist(1).where((row) => row.isNotEmpty).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
-        cells: row.map((cell) {
-          return DataCell(Text(cell));
-        }).toList(),
+        cells: [
+          DataCell(Text(row[0].toString())),
+          DataCell(Text(row[1].toString())),
+          DataCell(Text(row[2].toString())),
+          DataCell(Text(row[3].toString())),
+        ],
       );
     }).toList();
   }
 }
-
