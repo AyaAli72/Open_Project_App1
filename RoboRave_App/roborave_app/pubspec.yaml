@@ -22,13 +22,13 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
 
-flutter_icons:  # <-- Moved to root level
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/icons/icon.png"
 
 flutter:
   uses-material-design: true
   assets:
     - assets/images/image2.png
     - assets/icons/icon1.png  # <-- Add this if your icon exists here
+flutter_icons:  # <-- Moved to root level
+  android: true
+  ios: true
+  image_path: "assets/icons/icon1.png"
