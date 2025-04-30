@@ -35,9 +35,9 @@ class SplashScreen extends StatelessWidget {
       return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height, // Full height of the screen
-        color: Color.fromARGB(255, 153, 121, 121),
+        color: Color.fromARGB(255, 70, 62, 62),
         child: Image.asset(
-          'assets/images/image1.png',
+          'assets/images/image2.png',
           fit: BoxFit.contain, // Show full image without cropping
           errorBuilder: (_, __, ___) => const Placeholder(),
         ),

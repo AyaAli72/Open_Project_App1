@@ -27,7 +27,7 @@ class _EnterpreneursMSPageState extends State<EnterpreneursMSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!A2:D21';
+      const range = 'Enterpreneurs!A3:D21';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -129,7 +129,7 @@ class _EnterpreneursHSPageState extends State<EnterpreneursHSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!F2:I21'; // Fixed range to match 4 columns
+      const range = 'Enterpreneurs!F3:I21'; // Fixed range to match 4 columns
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -231,7 +231,7 @@ class _EnterpreneursESPageState extends State<EnterpreneursESPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!K2:N21';
+      const range = 'Enterpreneurs!K3:N21';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {

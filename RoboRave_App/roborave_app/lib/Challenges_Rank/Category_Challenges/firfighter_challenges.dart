@@ -25,9 +25,9 @@ class _FireFighterMSPageState extends State<FireFighterMSPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'FireFighter!A2:D21'; // Updated to include Team Name column
+      const range = 'FireFighter!A3:D21'; // Updated to include Team Name column
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -45,7 +45,8 @@ class _FireFighterMSPageState extends State<FireFighterMSPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Fire Fighter MS Challenge")), // Fixed title
+      appBar:
+          AppBar(title: const Text("Fire Fighter MS Challenge")), // Fixed title
       body: _buildBody(),
     );
   }
@@ -57,7 +58,8 @@ class _FireFighterMSPageState extends State<FireFighterMSPage> {
   }
 
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
+    if (sheetData.isEmpty)
+      return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -70,8 +72,12 @@ class _FireFighterMSPageState extends State<FireFighterMSPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
@@ -121,9 +127,9 @@ class _FireFighterHSPageState extends State<FireFighterHSPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'FireFighter!F2:I21'; // Updated range for HS
+      const range = 'FireFighter!F3:I21'; // Updated range for HS
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -153,7 +159,8 @@ class _FireFighterHSPageState extends State<FireFighterHSPage> {
   }
 
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
+    if (sheetData.isEmpty)
+      return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -166,8 +173,12 @@ class _FireFighterHSPageState extends State<FireFighterHSPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
@@ -217,9 +228,9 @@ class _FireFighterUPPageState extends State<FireFighterUPPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'FireFighter!K2:N21'; // Updated range for UP
+      const range = 'FireFighter!K3:N21'; // Updated range for UP
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -249,7 +260,8 @@ class _FireFighterUPPageState extends State<FireFighterUPPage> {
   }
 
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
+    if (sheetData.isEmpty)
+      return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -262,8 +274,12 @@ class _FireFighterUPPageState extends State<FireFighterUPPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,

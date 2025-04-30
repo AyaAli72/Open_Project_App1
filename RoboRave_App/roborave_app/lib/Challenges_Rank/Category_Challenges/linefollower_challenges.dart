@@ -25,9 +25,10 @@ class _LineFollowerMSPageState extends State<LineFollowerMSPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'LineFollower!A2:D21'; // Updated to include Team Name column
+      const range =
+          'LineFollower!A3:D21'; // Updated to include Team Name column
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -57,7 +58,8 @@ class _LineFollowerMSPageState extends State<LineFollowerMSPage> {
   }
 
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
+    if (sheetData.isEmpty)
+      return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -70,8 +72,12 @@ class _LineFollowerMSPageState extends State<LineFollowerMSPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
@@ -121,9 +127,9 @@ class _LineFollowerHSPageState extends State<LineFollowerHSPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'LineFollower!F2:I21'; // Updated range for HS
+      const range = 'LineFollower!F3:I21'; // Updated range for HS
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -153,7 +159,8 @@ class _LineFollowerHSPageState extends State<LineFollowerHSPage> {
   }
 
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
+    if (sheetData.isEmpty)
+      return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -166,8 +173,12 @@ class _LineFollowerHSPageState extends State<LineFollowerHSPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
@@ -217,9 +228,9 @@ class _LineFollowerESPageState extends State<LineFollowerESPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'LineFollower!K2:N21'; // Updated range for ES
+      const range = 'LineFollower!K3:N21'; // Updated range for ES
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -249,7 +260,8 @@ class _LineFollowerESPageState extends State<LineFollowerESPage> {
   }
 
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
+    if (sheetData.isEmpty)
+      return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -262,8 +274,12 @@ class _LineFollowerESPageState extends State<LineFollowerESPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,

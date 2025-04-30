@@ -27,7 +27,7 @@ class _AirplineMSPageState extends State<AirplineMSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Airpline!A2:D21'; // Updated to include Team Name column
+      const range = 'Airpline!A3:D21'; // Updated to include Team Name column
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -128,7 +128,7 @@ class _AirplineHSPageState extends State<AirplineHSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Airpline!F2:I21'; // Updated range for HS
+      const range = 'Airpline!F3:I21'; // Updated range for HS
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -229,7 +229,7 @@ class _AirplineUPPageState extends State<AirplineUPPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Airpline!K2:N21'; // Updated range for UP
+      const range = 'Airpline!K3:N21'; // Updated range for UP
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {

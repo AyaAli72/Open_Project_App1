@@ -25,9 +25,9 @@ class _MazeSolverMSPageState extends State<MazeSolverMSPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'MazeSolver!A2:D21'; // Updated to 4 columns
+      const range = 'MazeSolver!A3:D21'; // Updated to 4 columns
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -45,7 +45,8 @@ class _MazeSolverMSPageState extends State<MazeSolverMSPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Maze Solver MS Challenge")), // Fixed title spacing
+      appBar: AppBar(
+          title: const Text("Maze Solver MS Challenge")), // Fixed title spacing
       body: _buildBody(),
     );
   }
@@ -57,7 +58,8 @@ class _MazeSolverMSPageState extends State<MazeSolverMSPage> {
   }
 
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
+    if (sheetData.isEmpty)
+      return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -70,8 +72,12 @@ class _MazeSolverMSPageState extends State<MazeSolverMSPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
@@ -121,9 +127,9 @@ class _MazeSolverESPageState extends State<MazeSolverESPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'MazeSolver!F2:I21'; // Updated to 4 columns
+      const range = 'MazeSolver!F3:I21'; // Updated to 4 columns
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -141,7 +147,8 @@ class _MazeSolverESPageState extends State<MazeSolverESPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Maze Solver ES Challenge")), // Fixed title
+      appBar:
+          AppBar(title: const Text("Maze Solver ES Challenge")), // Fixed title
       body: _buildBody(),
     );
   }
@@ -153,7 +160,8 @@ class _MazeSolverESPageState extends State<MazeSolverESPage> {
   }
 
   Widget _buildDataTable() {
-    if (sheetData.isEmpty) return const Center(child: Text("No data available"));
+    if (sheetData.isEmpty)
+      return const Center(child: Text("No data available"));
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -166,8 +174,12 @@ class _MazeSolverESPageState extends State<MazeSolverESPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,

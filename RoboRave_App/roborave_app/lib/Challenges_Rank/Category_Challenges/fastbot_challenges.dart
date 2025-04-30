@@ -25,9 +25,10 @@ class _FastbotMSPageState extends State<FastbotMSPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Fastbot!A2:D21'; // Changed from 'FastBot' to 'Fastbot' for consistency
+      const range =
+          'Fastbot!A3:D21'; // Changed from 'FastBot' to 'Fastbot' for consistency
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -54,11 +55,11 @@ class _FastbotMSPageState extends State<FastbotMSPage> {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    
+
     if (errorMessage.isNotEmpty) {
       return Center(child: Text(errorMessage));
     }
-    
+
     return _buildDataTable();
   }
 
@@ -78,8 +79,11 @@ class _FastbotMSPageState extends State<FastbotMSPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label: Text('Team', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
@@ -92,7 +96,9 @@ class _FastbotMSPageState extends State<FastbotMSPage> {
   }
 
   List<DataRow> _buildRows() {
-    return sheetData.where((row) => row.isNotEmpty && row.length >= 4).map((row) {
+    return sheetData
+        .where((row) => row.isNotEmpty && row.length >= 4)
+        .map((row) {
       return DataRow(
         cells: [
           DataCell(Text(row[0])),
@@ -129,9 +135,9 @@ class _FastbotHSPageState extends State<FastbotHSPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Fastbot!F2:I21'; // Changed from 'FastBot' to 'Fastbot'
+      const range = 'Fastbot!F3:I21'; // Changed from 'FastBot' to 'Fastbot'
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -158,11 +164,11 @@ class _FastbotHSPageState extends State<FastbotHSPage> {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    
+
     if (errorMessage.isNotEmpty) {
       return Center(child: Text(errorMessage));
     }
-    
+
     return _buildDataTable();
   }
 
@@ -182,8 +188,11 @@ class _FastbotHSPageState extends State<FastbotHSPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label: Text('Team', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
@@ -196,7 +205,9 @@ class _FastbotHSPageState extends State<FastbotHSPage> {
   }
 
   List<DataRow> _buildRows() {
-    return sheetData.where((row) => row.isNotEmpty && row.length >= 4).map((row) {
+    return sheetData
+        .where((row) => row.isNotEmpty && row.length >= 4)
+        .map((row) {
       return DataRow(
         cells: [
           DataCell(Text(row[0])),
@@ -233,9 +244,9 @@ class _FastbotESPageState extends State<FastbotESPage> {
         isLoading = true;
         errorMessage = '';
       });
-      
+
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Fastbot!K2:N21'; // Changed from 'FastBot' to 'Fastbot'
+      const range = 'Fastbot!K3:N21'; // Changed from 'FastBot' to 'Fastbot'
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -262,11 +273,11 @@ class _FastbotESPageState extends State<FastbotESPage> {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-    
+
     if (errorMessage.isNotEmpty) {
       return Center(child: Text(errorMessage));
     }
-    
+
     return _buildDataTable();
   }
 
@@ -286,8 +297,12 @@ class _FastbotESPageState extends State<FastbotESPage> {
 
   List<DataColumn> _buildColumns() {
     return const [
-      DataColumn(label: Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
+      DataColumn(
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
@@ -300,7 +315,9 @@ class _FastbotESPageState extends State<FastbotESPage> {
   }
 
   List<DataRow> _buildRows() {
-    return sheetData.where((row) => row.isNotEmpty && row.length >= 4).map((row) {
+    return sheetData
+        .where((row) => row.isNotEmpty && row.length >= 4)
+        .map((row) {
       return DataRow(
         cells: [
           DataCell(Text(row[0])),
