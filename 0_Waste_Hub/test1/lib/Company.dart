@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'material.dart';
 
 class CompanyPage extends StatefulWidget {
   @override
@@ -10,12 +11,15 @@ class _CompanyPageState extends State<CompanyPage> {
       TextEditingController();
   final TextEditingController _companyPhoneController = TextEditingController();
   final TextEditingController _companyemailController = TextEditingController();
+  final TextEditingController _companyaddressController =
+      TextEditingController();
 
   @override
   void dispose() {
     _companyPageNameController.dispose();
     _companyPhoneController.dispose();
     _companyemailController.dispose();
+    _companyaddressController.dispose();
     super.dispose(); // Don't forget this!
   }
 
@@ -23,6 +27,7 @@ class _CompanyPageState extends State<CompanyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
           title: Text(
             "Company Page",
             style: TextStyle(
@@ -45,7 +50,7 @@ class _CompanyPageState extends State<CompanyPage> {
               TextField(
                 controller: _companyemailController,
                 decoration: InputDecoration(
-                  labelText: 'Enter your email',
+                  labelText: 'Enter your Company email',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -53,7 +58,15 @@ class _CompanyPageState extends State<CompanyPage> {
               TextField(
                 controller: _companyPhoneController,
                 decoration: InputDecoration(
-                  labelText: 'Enter your Phone Number',
+                  labelText: 'Enter your Company Phone Number',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: _companyaddressController,
+                decoration: InputDecoration(
+                  labelText: 'Enter your Company Address',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -64,7 +77,14 @@ class _CompanyPageState extends State<CompanyPage> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     backgroundColor: Colors.green),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MaterialShowPage(),
+                    ),
+                  );
+                },
                 child: Text(
                   "Submit",
                   style: TextStyle(

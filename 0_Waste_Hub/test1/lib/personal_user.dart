@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'material.dart';
 
 class PersonalUserPage extends StatefulWidget {
   @override
@@ -12,20 +13,14 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
       TextEditingController();
   final TextEditingController _personalUseremailController =
       TextEditingController();
-  final TextEditingController _personalUserMaterialController =
-      TextEditingController();
-  final TextEditingController _personalUserMaterialAmountController =
-      TextEditingController();
-final TextEditingController _personalUserMaterialPriceController =
+  final TextEditingController _personalUseraddresController =
       TextEditingController();
   @override
   void dispose() {
     _personalUserNameController.dispose();
     _personalUserPhoneController.dispose();
     _personalUseremailController.dispose();
-    _personalUserMaterialController.dispose();
-    _personalUserMaterialAmountController.dispose();
-    _personalUserMaterialPriceController.dispose();
+    _personalUseraddresController.dispose();
     super.dispose(); // Don't forget this!
   }
 
@@ -33,6 +28,7 @@ final TextEditingController _personalUserMaterialPriceController =
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text(
           "Personal User Page",
           style: TextStyle(
@@ -70,41 +66,56 @@ final TextEditingController _personalUserMaterialPriceController =
               ),
               SizedBox(height: 20),
               TextField(
-                controller: _personalUserMaterialController,
+                controller: _personalUseraddresController,
                 decoration: InputDecoration(
-                  labelText: 'Enter the Materil you Have.',
+                  labelText: 'Enter your Address',
                   border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 20),
-              TextField(
-                controller: _personalUserMaterialAmountController,
-                decoration: InputDecoration(
-                  labelText: 'Enter the amount Materil you Have.',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: _personalUserMaterialPriceController,
-                decoration: InputDecoration(
-                  labelText: 'Enter the Price for this Materil.',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(
-                height: 60,
-                width: 60,
-              ),
+              // TextField(
+              //   controller: _personalUserMaterialController,
+              //   decoration: InputDecoration(
+              //     labelText: 'Enter the Material you Have.',
+              //     border: OutlineInputBorder(),
+              //   ),
+              // ),
+              // SizedBox(height: 20),
+              // TextField(
+              //   controller: _personalUserMaterialAmountController,
+              //   decoration: InputDecoration(
+              //     labelText: 'Enter the amount Material you Have.',
+              //     border: OutlineInputBorder(),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // TextField(
+              //   controller: _personalUserMaterialPriceController,
+              //   decoration: InputDecoration(
+              //     labelText: 'Enter the Price for this Material.',
+              //     border: OutlineInputBorder(),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 60,
+              //   width: 60,
+              // ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.all(20),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
                     backgroundColor: Colors.green),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MaterialShowPage(),
+                    ),
+                  );
+                },
                 child: Text(
                   "Submit",
                   style: TextStyle(
