@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'addmaterial.dart';
+import 'googlesheetapi.dart'; // This should contain getRecords()
+import 'addmaterial.dart'; // Your page for adding new records
 
 class MaterialShowPage extends StatefulWidget {
   @override
@@ -8,19 +9,17 @@ class MaterialShowPage extends StatefulWidget {
 
 class _MaterialShowPageState extends State<MaterialShowPage> {
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          "0 Waste HUb",
+          "0 Waste Hub",
           style: TextStyle(
-              color: Colors.green, fontSize: 30, fontWeight: FontWeight.bold),
+            color: Colors.green,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 235, 225, 225),
       ),
