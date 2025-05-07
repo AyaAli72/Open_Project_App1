@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'googlesheetapi.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class AddMaterialPage extends StatefulWidget {
   @override
@@ -15,6 +18,8 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
       TextEditingController();
   bool _isLoading = false;
   bool _addAnotherMaterial = false;
+  File? _imageFile;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -63,8 +68,7 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
     try {
       const String spreadsheetId =
           '1N2gYaGOuN-VdU4EznQrx0jkCkbKJ9QZ2JZphSVDGHVA';
-      const String sheetName =
-          'Material'; 
+      const String sheetName = 'Material';
 
       await GoogleSheetsApi.appendRow(
         spreadsheetId: spreadsheetId,
@@ -127,6 +131,47 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
     return shouldLeave ?? false;
   }
 
+  // In _pickImage, remove the incorrect _uploadImage call
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final pickedFile = await _picker.pickImage(source: source);
+      if (pickedFile != null) {
+        setState(() {
+          _imageFile = File(pickedFile.path);
+        });
+        // Optionally auto-upload:
+        await _uploadImage();
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    }
+  }
+
+  Future<void> _uploadImage() async {
+    if (_imageFile == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('No image selected')),
+      );
+      return;
+    }
+
+    // Here you would implement your upload logic
+    // For example, uploading to Firebase Storage, your own server, etc.
+    // This is just a placeholder for the upload process
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Uploading image...')),
+    );
+
+    // Simulate upload delay
+    await Future.delayed(Duration(seconds: 2));
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Image uploaded successfully!')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -164,6 +209,7 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               SizedBox(height: 20),
               TextField(
@@ -173,8 +219,54 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => _pickImage(ImageSource.camera),
+                    child: const Text(
+                      'Take Photo',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(10),
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () => _pickImage(ImageSource.gallery),
+                    child: const Text(
+                      'Choose from Gallery',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.all(10),
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              if (_imageFile != null) ...[
+                SizedBox(height: 10),
+                Image.file(_imageFile!, height: 100),
+                SizedBox(height: 10),
+              ],
+              const SizedBox(
+                height: 10,
+              ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.all(20),
