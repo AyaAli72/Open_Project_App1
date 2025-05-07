@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Hospital_page extends StatefulWidget {
   @override
@@ -13,6 +14,10 @@ class _HospitalPageState extends State<Hospital_page> {
       TextEditingController();
   final TextEditingController _hospitalAmbulanceNumberController =
       TextEditingController();
+  final TextEditingController _hospitalEmailController =
+      TextEditingController();
+  final TextEditingController _hospitalAddressController =
+      TextEditingController();
 
   @override
   void dispose() {
@@ -20,6 +25,8 @@ class _HospitalPageState extends State<Hospital_page> {
     _hospitalPhoneController.dispose();
     _hospitalDoctorNamesController.dispose();
     _hospitalAmbulanceNumberController.dispose();
+    _hospitalEmailController.dispose();
+    _hospitalAddressController.dispose();
     super.dispose();
   }
 
@@ -44,9 +51,38 @@ class _HospitalPageState extends State<Hospital_page> {
               ),
               SizedBox(height: 20),
               TextField(
+                maxLines: 100,
+                controller: _hospitalEmailController,
+                decoration: InputDecoration(
+                  labelText: 'Enter The Hospital Email',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextField(
                 controller: _hospitalPhoneController,
                 decoration: InputDecoration(
                   labelText: 'Enter The hospital Phone Numbers',
+                  border: OutlineInputBorder(),
+                ),
+                  keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: _hospitalAmbulanceNumberController,
+                decoration: InputDecoration(
+                  labelText: 'Enter Your Ambulance Number.',
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: _hospitalAddressController,
+                decoration: InputDecoration(
+                  labelText: 'Enter Your Hospital Address.',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -56,19 +92,10 @@ class _HospitalPageState extends State<Hospital_page> {
                 controller: _hospitalDoctorNamesController,
                 decoration: InputDecoration(
                   labelText:
-                      'Enter The Names of the Doctors you have and their Specialization',
+                      'Enter A Linke for a Fiel Contain Hospital Doctors, Their Specification, and Price',
                   border: OutlineInputBorder(),
                 ),
               ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _hospitalAmbulanceNumberController,
-                decoration: InputDecoration(
-                  labelText: 'Enter Your Ambulance Number.',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 20),
             ],
           ),
         ),

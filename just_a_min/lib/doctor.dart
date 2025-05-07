@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Doctor_page extends StatefulWidget {
   @override
@@ -56,6 +57,8 @@ class _DoctorPageState extends State<Doctor_page> {
                   labelText: 'Enter your Phone Number',
                   border: OutlineInputBorder(),
                 ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               SizedBox(height: 20),
               TextField(
@@ -71,6 +74,15 @@ class _DoctorPageState extends State<Doctor_page> {
                 controller: _doctorCertificateController_,
                 decoration: InputDecoration(
                   labelText: 'Enter your certificates.',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                maxLines: 15,
+                controller: _doctorCertificateController_,
+                decoration: InputDecoration(
+                  labelText: 'Enter your WorkPlace (Clinic/ Hospital) Address.',
                   border: OutlineInputBorder(),
                 ),
               ),

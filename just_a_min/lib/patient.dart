@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 class patient_page extends StatefulWidget {
   @override
   _PatientPageState createState() => _PatientPageState();
@@ -53,6 +55,8 @@ class _PatientPageState extends State<patient_page> {
                   labelText: 'Enter your Phone Number',
                   border: OutlineInputBorder(),
                 ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               SizedBox(height: 20),
               TextField(
