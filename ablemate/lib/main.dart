@@ -1,3 +1,4 @@
+import 'package:ablemate/startpage.dart';
 import 'package:flutter/material.dart';
 import 'Screens/splashscreen.dart';
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '0 Waste Hub App',
+      title: 'AbleMate App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         inputDecorationTheme: InputDecorationTheme(
@@ -52,24 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // Process data
-      print({
-        'name': _userNameController.text,
-        'age': _userAgeController.text,
-        'phone': _userPhoneController.text,
-        'gender': selectedGender,
-      });
-      // Add your navigation or API call here
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 23, 90, 189),
+        backgroundColor: Colors.blue,
         title: Text(
           'Ablemate',
           style: TextStyle(
@@ -89,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 "Personal Information",
                 style: TextStyle(
                   fontSize: 20,
-                  color: Colors.white, 
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -175,7 +163,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: _submitForm,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StartPage()),
+                  );
+                },
                 child: Text(
                   "Sign In",
                   style: TextStyle(
