@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'ASD.dart';
+import 'Downsyndrome.dart';
+import 'blind.dart';
+import 'deaf.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -21,31 +25,52 @@ class _StartPageState extends State<StartPage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Expanded(
                 child: Column(
                   children: [
                     _buildInteractiveContainer(context,
-                        height: 200, text: 'Blind', onTap: () => {}),
-                    const SizedBox(height: 16),
+                        height: 200, text: 'Blind', onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BlindPage()),
+                      );
+                    }),
+                    const SizedBox(height: 20),
                     _buildInteractiveContainer(context,
-                        height: 200, text: 'Deaf', onTap: () => {}),
+                        height: 200, text: 'Deaf', onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DeafPage()),
+                      );
+                    }),
                   ],
                 ),
               ),
               const SizedBox(width: 16),
-              // Right Column
               Expanded(
                 child: Column(
                   children: [
                     _buildInteractiveContainer(context,
-                        height: 200, text: 'Down Syndrome', onTap: () => {}),
-                    const SizedBox(height: 16),
-                    _buildInteractiveContainer(context,
-                        height: 200,
-                        text: 'Autism Spectrum Disorder (ASD)',
-                        onTap: () => {}),
+                        height: 200, text: 'Down Syndrome', onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DownPage()),
+                      );
+                    }),
+                    const SizedBox(height: 20),
+                    _buildInteractiveContainer(
+                      context,
+                      height: 200,
+                      text: 'Autism Spectrum Disorder (ASD)',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ASDPage()),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
