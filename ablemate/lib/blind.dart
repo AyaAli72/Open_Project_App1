@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'httplink.dart';
 
 class BlindPage extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _BlindPageState extends State<BlindPage> {
     _TextController.dispose();
   }
 
-  void outputVoice() {}
+  // void outputVoice() {}
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -30,42 +31,52 @@ class _BlindPageState extends State<BlindPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              TextFormField(
-                maxLines: 30,
-                controller: _TextController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText:
-                      "Please Enter the Text You Want to Convert It into Voice",
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please Enter the Text You Want to Convert It into Voice';
-                  }
-                  return null;
-                },
+              // TextFormField(
+              //   maxLines: 30,
+              //   controller: _TextController,
+              //   decoration: InputDecoration(
+              //     border: OutlineInputBorder(),
+              //     labelText:
+              //         "Please Enter the Text You Want to Convert It into Voice",
+              //   ),
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Please Enter the Text You Want to Convert It into Voice';
+              //     }
+              //     return null;
+              //   },
+              // ),
+              Text(
+                "Information",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 15,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  outputVoice();
-                },
-                child: Text(
-                  "Convert",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding: EdgeInsets.all(15)),
-              ),
+               LinkButton(
+                      url: 'https://voicemaker.in/',
+                      buttonText: "Convert Online"),
+              // ElevatedButton(
+              //   onPressed: () {
+                 
+              //   },
+              //   child: Text(
+              //     "Convert",
+              //     style: TextStyle(
+              //         color: Colors.white,
+              //         fontSize: 20,
+              //         fontWeight: FontWeight.bold),
+              //   ),
+              //   style: ElevatedButton.styleFrom(
+              //       backgroundColor: Colors.blue,
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(10),
+              //       ),
+              //       padding: EdgeInsets.all(15)),
+              // ),
             ],
           ),
         ),

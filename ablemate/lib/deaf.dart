@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'httplink.dart';
 
 class DeafPage extends StatefulWidget {
   @override
@@ -50,25 +51,27 @@ class _DeafPageState extends State<DeafPage> {
                 SizedBox(
                   height: 15,
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    outputSign();
-                  },
-                  child: Text(
-                    "Convert",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: EdgeInsets.all(15)),
-                ),
-              ]),
+                LinkButton(url: "https://wecapable.com/tools/text-to-sign-language-converter/", buttonText: "Convert to Sign Language"),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     outputSign();
+                //   },
+                //   child: Text(
+                //     "Convert",
+                //     style: TextStyle(
+                //         color: Colors.white,
+                //         fontSize: 20,
+                //         fontWeight: FontWeight.bold),
+                //   ),
+                //   style: ElevatedButton.styleFrom(
+                //       backgroundColor: Colors.blue,
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(10),
+                //       ),
+                //       padding: EdgeInsets.all(15)),
+                // ),
+              ],
+              ),
         ),
       ),
     );

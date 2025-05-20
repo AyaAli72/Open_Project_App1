@@ -11,6 +11,7 @@ environment:
   sdk: '>=3.1.5 <4.0.0'
 
 dependencies:
+  shared_preferences: ^2.2.2
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0
@@ -19,7 +20,7 @@ dependencies:
   path_provider: ^2.0.14     # For storing files locally
   path: ^1.8.2               # File path utilities
   cupertino_icons: ^1.0.2    # iOS-style icons
-
+  url_launcher: ^6.1.11
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ablemate/main.dart'; // MyHomePage should be in a separate file
-
+import 'signinsplachscreen.dart';
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class SplashScreen extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => const MyHomePage(title: 'Able Mate'),
+          builder: (_) =>  const SignInSplashScreen(),
         ),
       );
     } catch (e) {

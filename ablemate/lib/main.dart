@@ -1,7 +1,9 @@
-import 'package:ablemate/startpage.dart';
 import 'package:flutter/material.dart';
+import 'ASD.dart';
+import 'Downsyndrome.dart';
+import 'blind.dart';
+import 'deaf.dart';
 import 'Screens/splashscreen.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -27,158 +29,117 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
-
 class _MyHomePageState extends State<MyHomePage> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _userNameController = TextEditingController();
-  final TextEditingController _userAgeController = TextEditingController();
-  final TextEditingController _userGenderController = TextEditingController();
-  final TextEditingController _userPhoneController = TextEditingController();
-  String? selectedGender;
-  final List<String> genders = ['Female', 'Male'];
-
-  @override
-  void dispose() {
-    _userNameController.dispose();
-    _userAgeController.dispose();
-    _userGenderController.dispose();
-    _userPhoneController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text(
-          'Ablemate',
+        title: const Text(
+          'AbleMate Main Page',
           style: TextStyle(
-            fontSize: 30,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+              fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
+        backgroundColor: Colors.blue,
       ),
-      body: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(15),
-          child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                "Personal Information",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+              Expanded(
+                child: Column(
+                  children: [
+                    _buildInteractiveContainer(context,
+                        height: 200, text: 'Blind', onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BlindPage()),
+                      );
+                    }),
+                    const SizedBox(height: 20),
+                    _buildInteractiveContainer(context,
+                        height: 200, text: 'Deaf', onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DeafPage()),
+                      );
+                    }),
+                  ],
                 ),
               ),
-              SizedBox(height: 20),
-              TextFormField(
-                controller: _userNameController,
-                decoration: InputDecoration(
-                  labelText: "Please enter your name",
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 15),
-              TextFormField(
-                controller: _userAgeController,
-                decoration: InputDecoration(
-                  labelText: "Please enter your age",
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your age';
-                  }
-                  if (int.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 15),
-              TextFormField(
-                controller: _userPhoneController,
-                decoration: InputDecoration(
-                  labelText: "Please enter your phone number",
-                ),
-                keyboardType: TextInputType.phone,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your phone number';
-                  }
-                  if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
-                    return 'Please enter a valid 10-digit number';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 15),
-              DropdownButtonFormField<String>(
-                value: selectedGender,
-                decoration: InputDecoration(
-                  labelText: 'Choose Your Gender',
-                  border: OutlineInputBorder(),
-                ),
-                items: genders.map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedGender = newValue;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please select your gender';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 30),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(15),
-                  backgroundColor: Colors.blue,
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => StartPage()),
-                  );
-                },
-                child: Text(
-                  "Sign In",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  children: [
+                    _buildInteractiveContainer(context,
+                        height: 200, text: 'Down Syndrome', onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DownPage()),
+                      );
+                    }),
+                    const SizedBox(height: 20),
+                    _buildInteractiveContainer(
+                      context,
+                      height: 200,
+                      text: 'Autism Spectrum Disorder (ASD)',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ASDPage()),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInteractiveContainer(
+    BuildContext context, {
+    required double height,
+    required String text,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      splashColor: Colors.white.withOpacity(0.3),
+      highlightColor: Colors.white.withOpacity(0.1),
+      child: Container(
+        height: height,
+        decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
       ),
