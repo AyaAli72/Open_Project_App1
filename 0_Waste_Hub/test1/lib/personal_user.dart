@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'googlesheetapi.dart';
-import 'material.dart';
+import 'main.dart';
 
 class PersonalUserPage extends StatefulWidget {
   @override
@@ -76,7 +76,7 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
       } else {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MaterialShowPage()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       }
     } catch (e) {
@@ -169,7 +169,6 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
                 ),
                 maxLines: 3,
               ),
-             
               SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(

@@ -38,12 +38,12 @@ iAE8SEw4HXXubsUJAwlI6FTi
 
   static Future<SheetsApi> _getSheetsApi() async {
     final credentials = ServiceAccountCredentials.fromJson(_credentials);
-    
+
     final client = await clientViaServiceAccount(
       credentials,
       [SheetsApi.spreadsheetsScope],
     );
-    
+
     return SheetsApi(client);
   }
 
@@ -55,14 +55,13 @@ iAE8SEw4HXXubsUJAwlI6FTi
   }) async {
     try {
       final sheets = await _getSheetsApi();
-      
-      final valueRange = ValueRange()
-        ..values = [rowData];
+
+      final valueRange = ValueRange()..values = [rowData];
 
       await sheets.spreadsheets.values.append(
         valueRange,
         spreadsheetId,
-        '$sheetName!A:D', // Append to any column in the sheet
+        '$sheetName!A2:D', // Append to any column in the sheet
         valueInputOption: 'USER_ENTERED',
         insertDataOption: 'INSERT_ROWS',
       );
@@ -79,9 +78,8 @@ iAE8SEw4HXXubsUJAwlI6FTi
   }) async {
     try {
       final sheets = await _getSheetsApi();
-      
-      final valueRange = ValueRange()
-        ..values = [rowData];
+
+      final valueRange = ValueRange()..values = [rowData];
 
       await sheets.spreadsheets.values.update(
         valueRange,
@@ -105,10 +103,11 @@ iAE8SEw4HXXubsUJAwlI6FTi
         spreadsheetId,
         range,
       );
-      
-      return response.values?.map((row) => 
-        row.map((cell) => cell.toString()).toList()
-      ).toList() ?? [];
+
+      return response.values
+              ?.map((row) => row.map((cell) => cell.toString()).toList())
+              .toList() ??
+          [];
     } catch (e) {
       throw Exception('Failed to fetch sheet data: $e');
     }

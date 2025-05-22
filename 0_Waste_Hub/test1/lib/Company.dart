@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'material.dart';
+import 'main.dart';
 import 'googlesheetapi.dart';
 
 class CompanyPage extends StatefulWidget {
@@ -88,7 +88,7 @@ class _CompanyPageState extends State<CompanyPage> {
       } else {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MaterialShowPage()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       }
     } catch (e) {
