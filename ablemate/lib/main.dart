@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'ASD.dart';
 import 'Downsyndrome.dart';
-import 'blind.dart';
-import 'deaf.dart';
 import 'Screens/splashscreen.dart';
+import 'sidedrawer.dart';
+import 'httplink.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -32,6 +33,7 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
+
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,14 @@ class _MyHomePageState extends State<MyHomePage> {
               fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.blue,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
       ),
+      drawer: MyDrawer_Page(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -57,7 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 200, text: 'Blind', onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BlindPage()),
+                        MaterialPageRoute(
+                          builder: (context) => LinkButton(
+                            url: 'https://voicemaker.in/',
+                            // buttonText: "Convert Online"
+                          ),
+                        ),
                       );
                     }),
                     const SizedBox(height: 20),
@@ -65,7 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
                         height: 200, text: 'Deaf', onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => DeafPage()),
+                        MaterialPageRoute(
+                          builder: (context) => LinkButton(
+                            url:
+                                "https://wecapable.com/tools/text-to-sign-language-converter/",
+                            // buttonText: "Convert to Sign Language"
+                          ),
+                        ),
                       );
                     }),
                   ],

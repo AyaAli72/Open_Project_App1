@@ -4,12 +4,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 class LinkButton extends StatelessWidget {
   final String url;
-  final String buttonText;
+  // final String buttonText;
 
   const LinkButton({
     super.key,
     required this.url,
-    required this.buttonText,
+    // required this.buttonText,
   });
 
   Future<void> _launchURL() async {
@@ -23,7 +23,7 @@ class LinkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: _launchURL,
-      child: Text(buttonText),
+      child: Text('Click on the Screen.'),
     );
   }
 }
