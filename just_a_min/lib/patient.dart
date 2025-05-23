@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:just_a_min/main.dart';
 import 'googlesheetAPI.dart';
 
-class patient_page extends StatefulWidget {
+class PatientPage extends StatefulWidget {
   @override
   _PatientPageState createState() => _PatientPageState();
 }
 
-class _PatientPageState extends State<patient_page> {
+class _PatientPageState extends State<PatientPage> {
   final TextEditingController _patientNameController = TextEditingController();
   final TextEditingController _patientEmailController = TextEditingController();
   final TextEditingController _patientPhoneController = TextEditingController();
@@ -15,6 +16,7 @@ class _PatientPageState extends State<patient_page> {
       TextEditingController();
   final TextEditingController _patientAddressController =
       TextEditingController();
+  final TextEditingController _patientAgeController = TextEditingController();
   bool _isLoading = false;
   bool _addAnotherUser = false;
 
@@ -25,6 +27,7 @@ class _PatientPageState extends State<patient_page> {
     _patientPhoneController.dispose();
     _patientHistoryController.dispose();
     _patientAddressController.dispose();
+    _patientAgeController.dispose();
     super.dispose();
   }
 
@@ -34,6 +37,7 @@ class _PatientPageState extends State<patient_page> {
     _patientPhoneController.clear();
     _patientHistoryController.clear();
     _patientAddressController.clear();
+    _patientAgeController.clear();
     _addAnotherUser = false;
   }
 
@@ -45,8 +49,9 @@ class _PatientPageState extends State<patient_page> {
     final name = _patientNameController.text.trim();
     final email = _patientEmailController.text.trim();
     final phone = _patientPhoneController.text.trim();
-    final illnesshistory = _patientHistoryController.text.trim();
     final address = _patientAddressController.text.trim();
+    final age = _patientAgeController.text.trim();
+    final illnesshistory = _patientHistoryController.text.trim();
 
     if (name.isEmpty || email.isEmpty || phone.isEmpty || address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -69,18 +74,24 @@ class _PatientPageState extends State<patient_page> {
           phone,
           email,
           illnesshistory,
+          age,
           address,
           DateTime.now().toString(),
         ],
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("User data saved successfully!")),
+        SnackBar(content: Text("Company data saved successfully!")),
       );
 
       if (_addAnotherUser) {
         _resetForm();
-      } else {}
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Failed to save data: ${e.toString()}")),
@@ -93,11 +104,20 @@ class _PatientPageState extends State<patient_page> {
   }
 
   Future<bool> _confirmBackNavigation() async {
+    if (_patientNameController.text.isEmpty &&
+        _patientEmailController.text.isEmpty &&
+        _patientPhoneController.text.isEmpty &&
+        _patientAddressController.text.isEmpty &&
+        _patientAgeController.text.isEmpty &&
+        _patientHistoryController.text.isEmpty) {
+      return true;
+    }
+
     final shouldLeave = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text("Are you sure?"),
-        content: Text("Leaving will clear any unsaved information."),
+        content: Text("Unsaved changes will be lost."),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
@@ -120,71 +140,118 @@ class _PatientPageState extends State<patient_page> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Patient Page'),
+        title: Text('Patient Registration'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
+      body: WillPopScope(
+        onWillPop: () async {
+          if (_patientNameController.text.isNotEmpty ||
+              _patientEmailController.text.isNotEmpty) {
+            return await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Unsaved Changes'),
+                    content: Text('Are you sure you want to discard changes?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          _resetForm();
+                          Navigator.pop(context, true);
+                        },
+                        child: Text('Discard'),
+                      ),
+                    ],
+                  ),
+                ) ??
+                false;
+          }
+          return true;
+        },
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(16),
           child: Column(
             children: [
               TextField(
                 controller: _patientNameController,
                 decoration: InputDecoration(
-                  labelText: 'Enter your name',
+                  labelText: 'Full Name',
                   border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.person),
                 ),
               ),
               SizedBox(height: 20),
               TextField(
                 controller: _patientEmailController,
                 decoration: InputDecoration(
-                  labelText: 'Enter your email',
+                  labelText: 'Email',
                   border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.email),
                 ),
+                keyboardType: TextInputType.emailAddress,
               ),
               SizedBox(height: 20),
               TextField(
                 controller: _patientPhoneController,
                 decoration: InputDecoration(
-                  labelText: 'Enter your Phone Number',
+                  labelText: 'Phone Number',
                   border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.phone),
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.phone,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               ),
               SizedBox(height: 20),
               TextField(
                 controller: _patientAddressController,
                 decoration: InputDecoration(
-                  labelText: 'Enter your Address',
+                  labelText: 'Address',
                   border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.location_on),
                 ),
               ),
               SizedBox(height: 20),
               TextField(
-                maxLines: 20,
+                controller: _patientAgeController,
+                decoration: InputDecoration(
+                  labelText: 'Age',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.cake),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 20),
+              TextField(
                 controller: _patientHistoryController,
                 decoration: InputDecoration(
-                  labelText: 'If you have a Illness History Please enter it.',
+                  labelText: 'Medical History',
                   border: OutlineInputBorder(),
+                  alignLabelWithHint: true,
                 ),
+                maxLines: 5,
               ),
               SizedBox(height: 20),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+                  backgroundColor: Colors.blue[800],
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  backgroundColor: Color.fromARGB(255, 31, 146, 222),
                 ),
                 onPressed: _isLoading ? null : _submitData,
                 child: _isLoading
                     ? CircularProgressIndicator(color: Colors.white)
                     : Text(
-                        "Submit",
+                        'SUBMIT',
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),

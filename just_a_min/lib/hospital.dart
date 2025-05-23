@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'googlesheetAPI.dart';
+import 'main.dart';
 
-class Hospital_page extends StatefulWidget {
+class HospitalPage extends StatefulWidget {
   @override
   _HospitalPageState createState() => _HospitalPageState();
 }
 
-class _HospitalPageState extends State<Hospital_page> {
+class _HospitalPageState extends State<HospitalPage> {
   final TextEditingController _hospitalNameController = TextEditingController();
   // final TextEditingController _hospitalDoctorNamesController =
   // TextEditingController();
@@ -51,7 +52,7 @@ class _HospitalPageState extends State<Hospital_page> {
     final email = _hospitalEmailController.text.trim();
     final phone = _hospitalPhoneController.text.trim();
     final address = _hospitalAddressController.text.trim();
-    final ambphone = _hospitalAmbulanceNumberController.text.trim();
+    final ambnumber = _hospitalAmbulanceNumberController.text.trim();
 
     if (name.isEmpty || email.isEmpty || phone.isEmpty || address.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -74,18 +75,23 @@ class _HospitalPageState extends State<Hospital_page> {
           phone,
           email,
           address,
-          ambphone,
+          ambnumber,
           DateTime.now().toString(),
         ],
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("User data saved successfully!")),
+        SnackBar(content: Text("Company data saved successfully!")),
       );
 
       if (_addAnotherUser) {
         _resetForm();
-      } else {}
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Failed to save data: ${e.toString()}")),
@@ -98,11 +104,19 @@ class _HospitalPageState extends State<Hospital_page> {
   }
 
   Future<bool> _confirmBackNavigation() async {
+    if (_hospitalNameController.text.isEmpty &&
+        _hospitalEmailController.text.isEmpty &&
+        _hospitalPhoneController.text.isEmpty &&
+        _hospitalAddressController.text.isEmpty &&
+        _hospitalAmbulanceNumberController.text.isEmpty) {
+      return true;
+    }
+
     final shouldLeave = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text("Are you sure?"),
-        content: Text("Leaving will clear any unsaved information."),
+        content: Text("Unsaved changes will be lost."),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),

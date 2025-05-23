@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'sidedrawer_options/doctortap.dart';
-import 'sidedrawer_options/hospitaltap.dart';
-import 'sidedrawer_options/pharmacytap.dart';
 
 class MyDrawer_Page extends StatefulWidget {
   @override
@@ -21,7 +18,7 @@ class _MyDrawer_PageState extends State<MyDrawer_Page> {
             ),
             child: Center(
               child: Text(
-                'App Options',
+                'Profile Information',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
@@ -29,35 +26,6 @@ class _MyDrawer_PageState extends State<MyDrawer_Page> {
                 ),
               ),
             ),
-          ),
-          ListTile(
-              leading: Icon(Icons.local_pharmacy),
-              title: Text('Pharmacy'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PharmacyTap_Page()),
-                );
-              }),
-          ListTile(
-            leading: Icon(Icons.local_hospital),
-            title: Text('Hospitals'),
-            onTap: () {
-             Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HospitalTap_Page()),
-                );
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Doctors'),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DoctorTap_Page()),
-                );
-            },
           ),
         ],
       ),

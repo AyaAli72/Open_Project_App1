@@ -28,12 +28,16 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  shared_preferences: ^2.2.2
   flutter:
     sdk: flutter
   googleapis: ^9.0.0
   googleapis_auth: ^1.3.0
   flutter_dotenv: ^5.1.0
   http: ^0.13.5
+  image_picker: ^1.0.4  # For picking images from gallery/camera       # For uploading to a server (if needed)
+  path_provider: ^2.0.14 # For storing files locally
+  path: ^1.8.2  
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -63,8 +67,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  # - images/Image1.jpeg
+  assets:
+  - assets/images/image1.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

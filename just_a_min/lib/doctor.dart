@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'googlesheetAPI.dart';
+import 'main.dart';
 
-class Doctor_page extends StatefulWidget {
+class DoctorPage extends StatefulWidget {
   @override
   _DoctorPageState createState() => _DoctorPageState();
 }
 
-class _DoctorPageState extends State<Doctor_page> {
+class _DoctorPageState extends State<DoctorPage> {
   final TextEditingController _doctornameController_ = TextEditingController();
   final TextEditingController _doctoremailController_ = TextEditingController();
   final TextEditingController _doctorphoneController_ = TextEditingController();
@@ -49,11 +50,16 @@ class _DoctorPageState extends State<Doctor_page> {
     final name = _doctornameController_.text.trim();
     final email = _doctoremailController_.text.trim();
     final phone = _doctorphoneController_.text.trim();
-    final address = _doctorWorkplaceController_.text.trim();
-    final specification = _doctorSpecializationController_.text.trim();
+    final workplace = _doctorWorkplaceController_.text.trim();
+    final specialization = _doctorSpecializationController_.text.trim();
     final certificate = _doctorCertificateController_.text.trim();
 
-    if (name.isEmpty || email.isEmpty || phone.isEmpty || address.isEmpty) {
+    if (name.isEmpty ||
+        email.isEmpty ||
+        phone.isEmpty ||
+        workplace.isEmpty ||
+        specialization.isEmpty ||
+        certificate.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please fill in all fields.")),
       );
@@ -73,20 +79,25 @@ class _DoctorPageState extends State<Doctor_page> {
           name,
           phone,
           email,
-          specification,
+          specialization,
           certificate,
-          address,
+          workplace,
           DateTime.now().toString(),
         ],
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("User data saved successfully!")),
+        SnackBar(content: Text("Company data saved successfully!")),
       );
 
       if (_addAnotherUser) {
         _resetForm();
-      } else {}
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Failed to save data: ${e.toString()}")),
@@ -99,11 +110,20 @@ class _DoctorPageState extends State<Doctor_page> {
   }
 
   Future<bool> _confirmBackNavigation() async {
+    if (_doctornameController_.text.isEmpty &&
+        _doctoremailController_.text.isEmpty &&
+        _doctorphoneController_.text.isEmpty &&
+        _doctorWorkplaceController_.text.isEmpty &&
+        _doctorSpecializationController_.text.isEmpty &&
+        _doctorCertificateController_.text.isEmpty) {
+      return true;
+    }
+
     final shouldLeave = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text("Are you sure?"),
-        content: Text("Leaving will clear any unsaved information."),
+        content: Text("Unsaved changes will be lost."),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
