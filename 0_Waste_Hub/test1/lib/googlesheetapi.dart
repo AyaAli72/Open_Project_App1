@@ -61,7 +61,7 @@ iAE8SEw4HXXubsUJAwlI6FTi
       await sheets.spreadsheets.values.append(
         valueRange,
         spreadsheetId,
-        '$sheetName!A2:D', // Append to any column in the sheet
+        '$sheetName!A3:F', // Append to any column in the sheet
         valueInputOption: 'USER_ENTERED',
         insertDataOption: 'INSERT_ROWS',
       );
