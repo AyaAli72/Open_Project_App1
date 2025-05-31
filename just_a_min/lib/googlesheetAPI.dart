@@ -21,7 +21,6 @@ class GoogleSheetsApi {
     return SheetsApi(client);
   }
 
-  // Append data to the next available row in a sheet
   static Future<void> appendRow({
     required String spreadsheetId,
     required String sheetName,
@@ -44,7 +43,7 @@ class GoogleSheetsApi {
     }
   }
 
-  // Update specific cells in the sheet
+
   static Future<void> updateRow({
     required String spreadsheetId,
     required String range, // e.g., 'Sheet1!A2:D2'
