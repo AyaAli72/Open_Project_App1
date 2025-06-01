@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:just_a_min/googlesheetAPI.dart'; // Your Google Sheets API class
+import 'package:just_a_min/googlesheetAPI.dart';
+import 'package:just_a_min/adddoctors.dart';
 
 class HospitalTap_Page extends StatefulWidget {
   @override
@@ -7,10 +8,11 @@ class HospitalTap_Page extends StatefulWidget {
 }
 
 class _HospitalTap_PageState extends State<HospitalTap_Page> {
-  // Ambulance data organized by category
   List<HospitalItem> _ambulancesCategory1 = [];
   List<HospitalItem> _ambulancesCategory2 = [];
   List<HospitalItem> _ambulancesCategory3 = [];
+  List<DoctorItem> _doctorsList = []; // New list for doctors data
+
   bool _isLoading = true;
   String? _errorMessage;
 
@@ -22,17 +24,20 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
 
   Future<void> _fetchSheetData() async {
     try {
-      // Fetch data from Google Sheets
-      final data = await GoogleSheetsApi.getData(
+      // Fetch hospital data
+      final hospitalData = await GoogleSheetsApi.getData(
         spreadsheetId: '1C5PoYWHCdwcAAGQVd9RJokLj3jPbrKGW-Byg7YJF85M',
-        range:
-            'Hospital!A:F', // Columns A-F: Category, Name, Phone, Email, Address, Ambulance Number
+        range: 'Hospital!A:F',
       );
+      final allAmbulances = _parseHospitalSheetData(hospitalData);
 
-      // Process raw data into ambulance items
-      final allAmbulances = _parseSheetData(data);
+      // Fetch doctors data from another sheet
+      final doctorsData = await GoogleSheetsApi.getData(
+        spreadsheetId: '1C5PoYWHCdwcAAGQVd9RJokLj3jPbrKGW-Byg7YJF85M',
+        range: 'Hospitaldoctor!A:F', // Adjust range to match your sheet
+      );
+      final doctors = _parseDoctorsSheetData(doctorsData);
 
-      // Categorize ambulances
       setState(() {
         _ambulancesCategory1 =
             allAmbulances.where((item) => item.category == 1).toList();
@@ -40,6 +45,7 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
             allAmbulances.where((item) => item.category == 2).toList();
         _ambulancesCategory3 =
             allAmbulances.where((item) => item.category == 3).toList();
+        _doctorsList = doctors;
         _isLoading = false;
       });
     } catch (e) {
@@ -50,39 +56,54 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
     }
   }
 
-  List<HospitalItem> _parseSheetData(List<List<String>> data) {
-    // Skip header row if exists
+  List<HospitalItem> _parseHospitalSheetData(List<List<String>> data) {
     final rows = data.length > 1 ? data.sublist(1) : [];
 
     return rows.map((row) {
-      // Map columns to ambulance properties
       return HospitalItem(
-        category: int.tryParse(row[0]) ?? 1, // First column = category
-        name: row[1], // Second column = name
-        phone: row[2], // Third column = phone
-        email: row[3], // Fourth column = email
-        address: row[4], // Fifth column = address
-        ambulanceNumber: row[5], // Sixth column = ambulance number
+        category: int.tryParse(row[0]) ?? 1,
+        name: row[0], // Fixed index
+        phone: row[1], // Fixed index
+        email: row[2], // Fixed index
+        address: row[3], // Fixed index
+        ambulanceNumber: row[4], // Fixed index
+      );
+    }).toList();
+  }
+
+  List<DoctorItem> _parseDoctorsSheetData(List<List<String>> data) {
+    final rows = data.length > 1 ? data.sublist(1) : [];
+
+    return rows.map((row) {
+      return DoctorItem(
+        name: row[0],
+        phone: row[1],
+        email: row[2],
+        address: row[3],
+        specialization: row[4],
       );
     }).toList();
   }
 
   Widget _buildAmbulanceList(String title, List<HospitalItem> ambulances) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        const SizedBox(height: 5),
         Container(
-          height: 250, // Increased height for more information
+          height: 250,
           child: ambulances.isEmpty
-              ? Center(child: Text('No More Hospitals available'))
+              ? Center(child: Text('No $title available'))
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: ambulances.length,
@@ -91,86 +112,193 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
                     return Card(
                       margin: EdgeInsets.all(8),
                       elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       child: Container(
-                        width: 180,
-                        padding: EdgeInsets.all(12),
+                        width: 200,
+                        padding: EdgeInsets.all(16),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Name
                             Text(
                               ambulance.name,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 18,
                               ),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            const SizedBox(height: 8),
-
-                            // Phone with icon
+                            const SizedBox(height: 10),
                             Row(
                               children: [
-                                Icon(Icons.phone, size: 16, color: Colors.blue),
-                                SizedBox(width: 4),
+                                Icon(Icons.phone, size: 18, color: Colors.blue),
+                                SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
                                     ambulance.phone,
-                                    style: TextStyle(fontSize: 14),
+                                    style: TextStyle(fontSize: 15),
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 6),
-
-                            // Email with icon
+                            const SizedBox(height: 8),
                             Row(
                               children: [
                                 Icon(Icons.email,
-                                    size: 16,
+                                    size: 18,
                                     color: Color.fromARGB(255, 39, 123, 186)),
-                                SizedBox(width: 4),
+                                SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
                                     ambulance.email,
-                                    style: TextStyle(fontSize: 13),
+                                    style: TextStyle(fontSize: 14),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 6),
-
-                            // Address with icon
+                            const SizedBox(height: 8),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Icon(Icons.location_on,
-                                    size: 16, color: Colors.green),
-                                SizedBox(width: 4),
+                                    size: 18, color: Colors.green),
+                                SizedBox(width: 6),
                                 Expanded(
                                   child: Text(
                                     ambulance.address,
-                                    style: TextStyle(fontSize: 13),
+                                    style: TextStyle(fontSize: 14),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 6),
-
-                            // Ambulance Number
+                            const SizedBox(height: 8),
                             Text(
                               'Ambulance: ${ambulance.ambulanceNumber}',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.purple,
                               ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDoctorsList() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+          child: Text(
+            'Doctors',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Container(
+          height: 250,
+          child: _doctorsList.isEmpty
+              ? Center(child: Text('No doctors available'))
+              : ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: _doctorsList.length,
+                  itemBuilder: (context, index) {
+                    final doctor = _doctorsList[index];
+                    return Card(
+                      margin: EdgeInsets.all(8),
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Container(
+                        width: 200,
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              doctor.name,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              doctor.specialization,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              children: [
+                                Icon(Icons.phone, size: 18, color: Colors.blue),
+                                SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    doctor.phone,
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Icon(Icons.email,
+                                    size: 18,
+                                    color: Color.fromARGB(255, 39, 123, 186)),
+                                SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    doctor.email,
+                                    style: TextStyle(fontSize: 14),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(Icons.location_on,
+                                    size: 18, color: Colors.green),
+                                SizedBox(width: 6),
+                                Expanded(
+                                  child: Text(
+                                    doctor.address,
+                                    style: TextStyle(fontSize: 14),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -192,30 +320,57 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
           "Hospital Services",
           style: TextStyle(
             color: Colors.white,
-            fontSize: 30.0, // Slightly smaller for longer title
+            fontSize: 30.0,
             fontWeight: FontWeight.w800,
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 18, 123, 164), // Red for emergency
+        backgroundColor: Color.fromARGB(255, 18, 123, 164),
       ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : _errorMessage != null
               ? Center(child: Text(_errorMessage!))
-              : SingleChildScrollView(
-                  child: Container(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 12),
-                        _buildAmbulanceList('Hospitals', _ambulancesCategory1),
-                        SizedBox(height: 12),
-                        _buildAmbulanceList('Hospitals', _ambulancesCategory2),
-                        SizedBox(height: 12),
-                        _buildAmbulanceList('Hospitals', _ambulancesCategory3),
-                      ],
+              : Stack(
+                  children: [
+                    SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 12),
+                            _buildAmbulanceList(
+                                'Hospitals', _ambulancesCategory1),
+                            SizedBox(height: 20),
+                            _buildAmbulanceList(
+                                'Clinics', _ambulancesCategory2),
+                            SizedBox(height: 20),
+                            _buildAmbulanceList(
+                                'Specialized Centers', _ambulancesCategory3),
+                            SizedBox(height: 20),
+                            _buildDoctorsList(), // Added doctors list
+                            SizedBox(height: 80),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                    Positioned(
+                      right: 20,
+                      bottom: 20,
+                      child: FloatingActionButton(
+                        backgroundColor: Colors.blue,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddDoctorsPage(),
+                            ),
+                          );
+                        },
+                        child: Icon(Icons.add, color: Colors.white, size: 30),
+                      ),
+                    ),
+                  ],
                 ),
     );
   }
@@ -236,5 +391,22 @@ class HospitalItem {
     required this.email,
     required this.address,
     required this.ambulanceNumber,
+  });
+}
+
+// New class for doctors data
+class DoctorItem {
+  final String name;
+  final String phone;
+  final String email;
+  final String address;
+  final String specialization;
+
+  DoctorItem({
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.address,
+    required this.specialization,
   });
 }
