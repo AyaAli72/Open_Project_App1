@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:just_a_min/main.dart';
-import 'signinsplachscreen.dart';
+import 'package:just_a_min/main.dart';
+
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class SplashScreen extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => SignInSplashScreen(),
+          builder: (_) => HomePage(),
         ),
       );
     } catch (e) {
