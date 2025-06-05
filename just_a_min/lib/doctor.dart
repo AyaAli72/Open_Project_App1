@@ -157,6 +157,7 @@ class _DoctorPageState extends State<DoctorPage> {
                 controller: _doctornameController_,
                 decoration: InputDecoration(
                   labelText: 'Enter your name',
+                  prefixIcon: Icon(Icons.person),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -165,6 +166,7 @@ class _DoctorPageState extends State<DoctorPage> {
                 controller: _doctoremailController_,
                 decoration: InputDecoration(
                   labelText: 'Enter your email',
+                  prefixIcon: Icon(Icons.email),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -173,6 +175,7 @@ class _DoctorPageState extends State<DoctorPage> {
                 controller: _doctorphoneController_,
                 decoration: InputDecoration(
                   labelText: 'Enter your Phone Number',
+                  prefixIcon: Icon(Icons.phone),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
@@ -184,6 +187,7 @@ class _DoctorPageState extends State<DoctorPage> {
                 controller: _doctorSpecializationController_,
                 decoration: InputDecoration(
                   labelText: 'Enter Your Specialization.',
+                  prefixIcon: Icon(Icons.details),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -193,6 +197,7 @@ class _DoctorPageState extends State<DoctorPage> {
                 controller: _doctorCertificateController_,
                 decoration: InputDecoration(
                   labelText: 'Enter your certificates.',
+                  prefixIcon: Icon(Icons.details),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -201,6 +206,7 @@ class _DoctorPageState extends State<DoctorPage> {
                 controller: _doctorWorkplaceController_,
                 decoration: InputDecoration(
                   labelText: 'Enter your WorkPlace (Clinic/ Hospital) Address.',
+                  prefixIcon: Icon(Icons.location_on),
                   border: OutlineInputBorder(),
                 ),
               ),

@@ -150,6 +150,7 @@ class _HospitalPageState extends State<HospitalPage> {
                 controller: _hospitalNameController,
                 decoration: InputDecoration(
                   labelText: 'Enter The Hospital name',
+                  prefixIcon: Icon(Icons.person),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -158,6 +159,7 @@ class _HospitalPageState extends State<HospitalPage> {
                 controller: _hospitalEmailController,
                 decoration: InputDecoration(
                   labelText: 'Enter The Hospital Email',
+                  prefixIcon: Icon(Icons.email),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -167,6 +169,7 @@ class _HospitalPageState extends State<HospitalPage> {
                 controller: _hospitalPhoneController,
                 decoration: InputDecoration(
                   labelText: 'Enter The hospital Phone Numbers',
+                  prefixIcon: Icon(Icons.phone),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
@@ -176,6 +179,7 @@ class _HospitalPageState extends State<HospitalPage> {
               TextField(
                 controller: _hospitalAmbulanceNumberController,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.phone),
                   labelText: 'Enter Your Ambulance Number.',
                   border: OutlineInputBorder(),
                 ),
@@ -187,6 +191,7 @@ class _HospitalPageState extends State<HospitalPage> {
                 controller: _hospitalAddressController,
                 decoration: InputDecoration(
                   labelText: 'Enter Your Hospital Address.',
+                  prefixIcon: Icon(Icons.location_on),
                   border: OutlineInputBorder(),
                 ),
               ),

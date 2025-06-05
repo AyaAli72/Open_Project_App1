@@ -140,6 +140,7 @@ class _PharmacyPageState extends State<PharmacyPage> {
                 controller: _pharmacyNameController,
                 decoration: InputDecoration(
                   labelText: 'Enter The Pharmacy Name',
+                  prefixIcon: Icon(Icons.person),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -148,6 +149,7 @@ class _PharmacyPageState extends State<PharmacyPage> {
                 controller: _pharmacyPhoneController,
                 decoration: InputDecoration(
                   labelText: 'Enter The Pharmacy Phone Numbers',
+                  prefixIcon: Icon(Icons.phone),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
@@ -158,6 +160,7 @@ class _PharmacyPageState extends State<PharmacyPage> {
                 controller: _pharmacyEmailController,
                 decoration: InputDecoration(
                   labelText: 'Enter The Pharmacy Email',
+                  prefixIcon: Icon(Icons.email),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -166,6 +169,7 @@ class _PharmacyPageState extends State<PharmacyPage> {
                 controller: _pharmacyAddressController,
                 decoration: InputDecoration(
                   labelText: 'Enter The Pharmacy Address',
+                  prefixIcon: Icon(Icons.location_on),
                   border: OutlineInputBorder(),
                 ),
               ),
