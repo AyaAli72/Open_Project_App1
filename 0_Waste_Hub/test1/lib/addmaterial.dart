@@ -187,7 +187,7 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 235, 225, 225),
+          backgroundColor: Color.fromARGB(255, 30, 29, 29),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -197,6 +197,7 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
                 controller: _materialDetailsController,
                 decoration: InputDecoration(
                   labelText: 'Material Details',
+                  prefixIcon: Icon(Icons.description),
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 2,
@@ -206,6 +207,7 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
                 controller: _materialAmountController,
                 decoration: InputDecoration(
                   labelText: 'Material Amount',
+                  prefixIcon: Icon(Icons.scale),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.number,
@@ -216,12 +218,40 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
                 controller: _materialPriceController,
                 decoration: InputDecoration(
                   labelText: 'Material Price',
+                  prefixIcon: Icon(Icons.attach_money),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                 ],
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _materialPriceController,
+                decoration: InputDecoration(
+                  labelText: 'User Name',
+                  prefixIcon: Icon(Icons.person),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _materialPriceController,
+                decoration: InputDecoration(
+                  labelText: 'User Address',
+                  prefixIcon: Icon(Icons.location_on),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _materialPriceController,
+                decoration: InputDecoration(
+                  labelText: 'User Phone',
+                  prefixIcon: Icon(Icons.phone),
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 20),
               Row(

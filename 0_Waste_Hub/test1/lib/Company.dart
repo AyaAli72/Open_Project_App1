@@ -148,7 +148,7 @@ class _CompanyPageState extends State<CompanyPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 230, 224, 224),
+          backgroundColor: Colors.black,
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -159,6 +159,7 @@ class _CompanyPageState extends State<CompanyPage> {
                 controller: _companyPageNameController,
                 decoration: InputDecoration(
                   labelText: 'Company Name',
+                  prefixIcon: Icon(Icons.group),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -167,6 +168,7 @@ class _CompanyPageState extends State<CompanyPage> {
                 controller: _companyemailController,
                 decoration: InputDecoration(
                   labelText: 'Company Email',
+                  prefixIcon: Icon(Icons.email),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -176,6 +178,7 @@ class _CompanyPageState extends State<CompanyPage> {
                 controller: _companyPhoneController,
                 decoration: InputDecoration(
                   labelText: 'Company Phone Number',
+                  prefixIcon: Icon(Icons.phone),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.phone,
@@ -185,6 +188,7 @@ class _CompanyPageState extends State<CompanyPage> {
                 controller: _companyaddressController,
                 decoration: InputDecoration(
                   labelText: 'Company Address',
+                  prefixIcon: Icon(Icons.location_on),
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 3,

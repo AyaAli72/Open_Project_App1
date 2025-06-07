@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'profilepage.dart';
 import 'googlesheetAPI.dart';
+import 'Company.dart';
+import 'personal_user.dart';
 
 class MyDrawer_Page extends StatefulWidget {
   @override
@@ -25,9 +27,8 @@ class _MyDrawer_PageState extends State<MyDrawer_Page> {
     });
 
     try {
-      const spreadsheetId =
-          '1ImOskhUNZtMarvFbyLM5AHs-yP-CkGtqEBxcn81cRGY'; // Replace with your ID
-      const range = 'SignIn!A2:D'; // Match your sheet name and range
+      const spreadsheetId = '1ImOskhUNZtMarvFbyLM5AHs-yP-CkGtqEBxcn81cRGY';
+      const range = 'SignIn!A2:D';
 
       final data = await GoogleSheetsApi.getData(
         spreadsheetId: spreadsheetId,
@@ -38,9 +39,9 @@ class _MyDrawer_PageState extends State<MyDrawer_Page> {
         _userNames = data.map((row) => row[0].toString()).toList();
       });
     } catch (e) {
-      // setState(() {
-      //   _errorMessage = 'Failed to load user data: ${e.toString()}';
-      // });
+      setState(() {
+        _errorMessage = 'Failed to load user data: ${e.toString()}';
+      });
     } finally {
       setState(() => _isLoading = false);
     }
@@ -49,64 +50,117 @@ class _MyDrawer_PageState extends State<MyDrawer_Page> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
+      child: ListView(
+        padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.green,
             ),
             child: Center(
-              child: Text(
-                'User List',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: const Color.fromARGB(255, 24, 23, 23),
+                    child: Icon(Icons.person,
+                        size: 40, color: Color.fromARGB(255, 4, 125, 79)),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Welcome!',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          Expanded(
-            child: _buildContent(),
+          // Users section
+          ExpansionTile(
+            leading: Icon(Icons.group, color: Colors.green),
+            title: Text('User List', style: TextStyle(fontSize: 18)),
+            children: [
+              if (_isLoading)
+                Center(
+                    child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: CircularProgressIndicator(),
+                ))
+              else if (_errorMessage.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child:
+                      Text(_errorMessage, style: TextStyle(color: Colors.red)),
+                )
+              else if (_userNames.isEmpty)
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text('No users found'),
+                )
+              else
+                ..._userNames
+                    .map((name) => ListTile(
+                          title: Text(
+                            name,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ))
+                    .toList(),
+            ],
+          ),
+          // Navigation items
+
+          ListTile(
+            leading: Icon(Icons.local_hospital, color: Colors.green),
+            title: Text('Company', style: TextStyle(fontSize: 18)),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CompanyPage()));
+            },
           ),
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile Page'),
+            leading: Icon(Icons.local_pharmacy, color: Colors.green),
+            title: Text('Personal User', style: TextStyle(fontSize: 18)),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfilPage()),
-              );
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PersonalUserPage()));
             },
+          ),
+          ListTile(
+            leading: Icon(Icons.account_circle, color: Colors.green),
+            title: Text('Profile Page', style: TextStyle(fontSize: 18)),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ProfilPage()));
+            },
+          ),
+          Divider(),
+          // Additional drawer items
+          ListTile(
+            leading: Icon(Icons.settings, color: Colors.green),
+            title: Text('Settings', style: TextStyle(fontSize: 18)),
+            onTap: () => Navigator.pop(context),
+          ),
+          ListTile(
+            leading: Icon(Icons.help, color: Colors.green),
+            title: Text('Help & Support', style: TextStyle(fontSize: 18)),
+            onTap: () => Navigator.pop(context),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout, color: Colors.green),
+            title: Text('Logout', style: TextStyle(fontSize: 18)),
+            onTap: () => Navigator.pop(context),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildContent() {
-    if (_isLoading) {
-      return Center(child: CircularProgressIndicator());
-    }
-
-    if (_errorMessage.isNotEmpty) {
-      return Center(child: Text(_errorMessage));
-    }
-
-    if (_userNames.isEmpty) {
-      return Center(child: Text('No users found'));
-    }
-
-    return ListView.builder(
-      itemCount: _userNames.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(
-            "Hello",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        );
-      },
     );
   }
 }

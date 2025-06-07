@@ -129,7 +129,7 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: const Color.fromARGB(255, 235, 225, 225),
+          backgroundColor: Colors.black,
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
@@ -139,6 +139,7 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
                 controller: _nameController,
                 decoration: InputDecoration(
                   labelText: 'Full Name',
+                  prefixIcon: Icon(Icons.person),
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -147,6 +148,7 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email Address',
+                  prefixIcon: Icon(Icons.email),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -156,6 +158,7 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
                 controller: _phoneController,
                 decoration: InputDecoration(
                   labelText: 'Phone Number',
+                  prefixIcon: Icon(Icons.phone),
                   border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.phone,
@@ -165,6 +168,7 @@ class _PersonalUserPageState extends State<PersonalUserPage> {
                 controller: _addressController,
                 decoration: InputDecoration(
                   labelText: 'Full Address',
+                  prefixIcon: Icon(Icons.location_on),
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 3,
