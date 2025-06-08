@@ -61,14 +61,14 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               icon: Icon(
                 Icons.emoji_events,
-                size: 36,
+                size: 30,
                 color: Colors.white,
               ), // Trophy icon
               label: Text(
                 "All Challenges Result",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 30,
+                  fontSize: 27,
                   fontWeight: FontWeight.bold,
                 ),
               ),
