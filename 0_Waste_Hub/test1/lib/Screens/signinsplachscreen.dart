@@ -24,7 +24,7 @@ class _SignInSplashScreenState extends State<SignInSplashScreen> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) =>  SignInPage()),
+          MaterialPageRoute(builder: (_) => SignInPage()),
         );
       } else {
         Navigator.pushReplacement(

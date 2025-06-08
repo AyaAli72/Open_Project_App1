@@ -11,36 +11,53 @@ class MyDrawer_Page extends StatefulWidget {
 
 class _MyDrawer_PageState extends State<MyDrawer_Page> {
   List<String> _userNames = [];
+  List<String> _companyNames = [];
   bool _isLoading = false;
   String _errorMessage = '';
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    _loadData();
   }
 
-  Future<void> _loadUserData() async {
+  Future<void> _loadData() async {
     setState(() {
       _isLoading = true;
       _errorMessage = '';
     });
 
     try {
-      const spreadsheetId = '1ImOskhUNZtMarvFbyLM5AHs-yP-CkGtqEBxcn81cRGY';
-      const range = 'SignIn!A2:D';
+      const spreadsheetId = '1N2gYaGOuN-VdU4EznQrx0jkCkbKJ9QZ2JZphSVDGHVA';
 
-      final data = await GoogleSheetsApi.getData(
+      // Load users from SignIn sheet
+      const usersRange = 'PersonalUser!A2:E';
+      final usersData = await GoogleSheetsApi.getData(
         spreadsheetId: spreadsheetId,
-        range: range,
+        range: usersRange,
+      );
+
+      // Load companies from Company sheet
+      const companiesRange = 'Company!A2:D'; // Adjust range as needed
+      final companiesData = await GoogleSheetsApi.getData(
+        spreadsheetId: spreadsheetId,
+        range: companiesRange,
       );
 
       setState(() {
-        _userNames = data.map((row) => row[0].toString()).toList();
+        _userNames = usersData
+            .where((row) => row.isNotEmpty && row[0].toString().isNotEmpty)
+            .map((row) => row[0].toString())
+            .toList();
+
+        _companyNames = companiesData
+            .where((row) => row.isNotEmpty && row[0].toString().isNotEmpty)
+            .map((row) => row[0].toString())
+            .toList();
       });
     } catch (e) {
       setState(() {
-        _errorMessage = 'Failed to load user data: ${e.toString()}';
+        _errorMessage = 'Failed to load data: ${e.toString()}';
       });
     } finally {
       setState(() => _isLoading = false);
@@ -80,6 +97,7 @@ class _MyDrawer_PageState extends State<MyDrawer_Page> {
               ),
             ),
           ),
+
           // Users section
           ExpansionTile(
             leading: Icon(Icons.group, color: Colors.green),
@@ -113,10 +131,44 @@ class _MyDrawer_PageState extends State<MyDrawer_Page> {
                     .toList(),
             ],
           ),
-          // Navigation items
 
+          // Companies section
+          ExpansionTile(
+            leading: Icon(Icons.business, color: Colors.green),
+            title: Text('Company List', style: TextStyle(fontSize: 18)),
+            children: [
+              if (_isLoading)
+                Center(
+                    child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: CircularProgressIndicator(),
+                ))
+              else if (_errorMessage.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child:
+                      Text(_errorMessage, style: TextStyle(color: Colors.red)),
+                )
+              else if (_companyNames.isEmpty)
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text('No companies found'),
+                )
+              else
+                ..._companyNames
+                    .map((company) => ListTile(
+                          title: Text(
+                            company,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ))
+                    .toList(),
+            ],
+          ),
+
+          // Navigation items
           ListTile(
-            leading: Icon(Icons.local_hospital, color: Colors.green),
+            leading: Icon(Icons.business, color: Colors.green),
             title: Text('Company', style: TextStyle(fontSize: 18)),
             onTap: () {
               Navigator.pop(context);
@@ -125,7 +177,7 @@ class _MyDrawer_PageState extends State<MyDrawer_Page> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.local_pharmacy, color: Colors.green),
+            leading: Icon(Icons.person, color: Colors.green),
             title: Text('Personal User', style: TextStyle(fontSize: 18)),
             onTap: () {
               Navigator.pop(context);
@@ -143,6 +195,7 @@ class _MyDrawer_PageState extends State<MyDrawer_Page> {
             },
           ),
           Divider(),
+
           // Additional drawer items
           ListTile(
             leading: Icon(Icons.settings, color: Colors.green),
