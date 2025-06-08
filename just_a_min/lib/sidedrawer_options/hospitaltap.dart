@@ -33,7 +33,7 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
       // Fetch doctors data
       final doctorsData = await GoogleSheetsApi.getData(
         spreadsheetId: '1C5PoYWHCdwcAAGQVd9RJokLj3jPbrKGW-Byg7YJF85M',
-        range: 'Hospitaldoctor!A:F',
+        range: 'Hospitaldoctor!A:I', // Updated to include all 9 columns
       );
       final doctors = _parseDoctorsSheetData(doctorsData);
 
@@ -48,7 +48,7 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
         _isLoading = false;
       });
     } catch (e) {
-    setState(() {
+      setState(() {
         _errorMessage = 'Failed to load data: $e';
         _isLoading = false;
       });
@@ -65,8 +65,8 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
       return HospitalItem(
         category: int.tryParse(row[0]) ?? 1,
         name: row[0],
-        phone: row[1],
-        email: row[2],
+        phone: row[2],
+        email: row[1],
         address: row[3],
         ambulanceNumber: row[4],
       );
@@ -78,14 +78,18 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
 
     return rows.map((row) {
       // Ensure row has enough elements
-      while (row.length < 5) row.add('');
+      while (row.length < 9) row.add('');
 
       return DoctorItem(
         name: row[0],
-        phone: row[1],
-        email: row[2],
-        address: row[3],
-        specialization: row[4],
+        specialization: row[1],
+        price: row[2],
+        date: row[3],
+        hospitalName: row[4],
+        hospitalPhone: row[5],
+        phone: row[6], // Doctor's personal phone
+        email: row[7],
+        address: row[8],
       );
     }).toList();
   }
@@ -220,7 +224,7 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
         ),
         const SizedBox(height: 5),
         Container(
-          height: 240,
+          height: 260, // Increased height to accommodate more info
           child: _doctorsList.isEmpty
               ? Center(child: Text('No doctors available'))
               : ListView.builder(
@@ -242,12 +246,13 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
                         margin: EdgeInsets.all(8),
                         elevation: 4,
                         child: Container(
-                          width: 180,
+                          width: 200, // Increased width for more information
                           padding: EdgeInsets.all(12),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // Doctor name
                               Text(
                                 doctor.name,
                                 style: TextStyle(
@@ -256,55 +261,71 @@ class _HospitalTap_PageState extends State<HospitalTap_Page> {
                                   color: Colors.blue,
                                 ),
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 6),
+
+                              // Specialization
                               Text(
                                 doctor.specialization,
                                 style: TextStyle(
                                   fontSize: 14,
-                                  fontStyle: FontStyle.italic,
                                   color: Colors.deepPurple,
                                 ),
                               ),
-                              const SizedBox(height: 8),
-                              Row(
-                                children: [
-                                  Icon(Icons.phone,
-                                      size: 16, color: Colors.green),
-                                  SizedBox(width: 4),
-                                  Text(
-                                    doctor.phone,
-                                    style: TextStyle(fontSize: 14),
-                                  ),
-                                ],
+                              const SizedBox(height: 6),
+
+                              // Price
+                              Text(
+                                "Fee: ${doctor.price}",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green[700],
+                                ),
                               ),
-                              const SizedBox(height: 4),
+                              const SizedBox(height: 6),
+
+                              // Date
+                              Text(
+                                "Available: ${doctor.date}",
+                                style: TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.orange[700],
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+
+                              // Hospital
                               Row(
                                 children: [
-                                  Icon(Icons.email,
-                                      size: 16, color: Colors.red),
+                                  Icon(Icons.local_hospital,
+                                      size: 14, color: Colors.red),
                                   SizedBox(width: 4),
                                   Expanded(
                                     child: Text(
-                                      doctor.email,
-                                      style: TextStyle(fontSize: 13),
+                                      doctor.hospitalName,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontStyle: FontStyle.italic,
+                                      ),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 8),
+                              const SizedBox(height: 6),
+
+                              // Contact
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.location_on,
-                                      size: 16, color: Colors.orange),
+                                  Icon(Icons.phone,
+                                      size: 14, color: Colors.green),
                                   SizedBox(width: 4),
                                   Expanded(
                                     child: Text(
-                                      doctor.address,
+                                      doctor.phone,
                                       style: TextStyle(fontSize: 13),
-                                      maxLines: 2,
+                                      maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -396,17 +417,25 @@ class HospitalItem {
 
 class DoctorItem {
   final String name;
-  final String phone;
+  final String specialization;
+  final String price;
+  final String date;
+  final String hospitalName;
+  final String hospitalPhone;
+  final String phone; // Doctor's personal phone
   final String email;
   final String address;
-  final String specialization;
 
   DoctorItem({
     required this.name,
+    required this.specialization,
+    required this.price,
+    required this.date,
+    required this.hospitalName,
+    required this.hospitalPhone,
     required this.phone,
     required this.email,
     required this.address,
-    required this.specialization,
   });
 }
 
@@ -443,14 +472,26 @@ class HospitalDetailPage extends StatelessWidget {
                 children: [
                   _buildSectionHeader("Contact"),
                   _buildInfoRow(Icons.phone, hospital.phone, Colors.green),
+                  SizedBox(
+                    height: 15,
+                  ),
                   _buildSectionHeader("Email"),
                   _buildInfoRow(Icons.email, hospital.email, Colors.red),
+                  SizedBox(
+                    height: 15,
+                  ),
                   _buildSectionHeader("Address"),
                   _buildInfoRow(
                       Icons.location_on, hospital.address, Colors.orange),
+                  SizedBox(
+                    height: 15,
+                  ),
                   _buildSectionHeader("Ambulances"),
                   _buildInfoRow(Icons.local_hospital, hospital.ambulanceNumber,
                       Colors.purple),
+                  SizedBox(
+                    height: 15,
+                  ),
                 ],
               ),
             ),
@@ -510,31 +551,69 @@ class DoctorDetailPage extends StatelessWidget {
         backgroundColor: Colors.blue,
         centerTitle: true,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Card(
-            elevation: 6,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildSectionHeader("Specialization"),
-                  _buildInfoRow(Icons.medical_services, doctor.specialization,
-                      Colors.deepPurple),
-                  _buildSectionHeader("Contact"),
-                  _buildInfoRow(Icons.phone, doctor.phone, Colors.green),
-                  _buildSectionHeader("Email"),
-                  _buildInfoRow(Icons.email, doctor.email, Colors.red),
-                  _buildSectionHeader("Address"),
-                  _buildInfoRow(
-                      Icons.location_on, doctor.address, Colors.orange),
-                ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              elevation: 6,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Doctor Basic Info
+                    Center(
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 50,
+                            backgroundColor: Colors.blue[100],
+                            child: Icon(Icons.person,
+                                size: 50, color: Colors.blue),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            doctor.name,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.deepPurple,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const Divider(thickness: 1, height: 30),
+
+                    // Professional Information
+                    _buildSectionHeader("Professional Information"),
+                    _buildInfoRow(Icons.medical_services, "Specialization",
+                        doctor.specialization),
+                    _buildInfoRow(
+                        Icons.attach_money, "Consultation Fee", doctor.price),
+                    _buildInfoRow(
+                        Icons.calendar_today, "Next Available", doctor.date),
+
+                    // Hospital Information
+                    _buildSectionHeader("Hospital Information"),
+                    _buildInfoRow(
+                        Icons.local_hospital, "Hospital", doctor.hospitalName),
+                    _buildInfoRow(
+                        Icons.phone, "Hospital Phone", doctor.hospitalPhone),
+
+                    // // Contact Information
+                    // _buildSectionHeader("Contact Information"),
+                    // _buildInfoRow(Icons.phone, "Personal Phone", doctor.phone),
+                    // _buildInfoRow(Icons.email, "Email", doctor.email),
+                    // _buildInfoRow(Icons.location_on, "Address", doctor.address),
+                  ],
+                ),
               ),
             ),
           ),
@@ -545,30 +624,45 @@ class DoctorDetailPage extends StatelessWidget {
 
   Widget _buildSectionHeader(String title) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16.0, bottom: 6),
+      padding: const EdgeInsets.only(top: 16.0, bottom: 8),
       child: Text(
         title,
         style: TextStyle(
-          color: Colors.black87,
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
+          color: Colors.blue[700],
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String text, Color iconColor) {
+  Widget _buildInfoRow(IconData icon, String label, String value) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
+      margin: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: iconColor),
+          Icon(icon, color: Colors.blue[700]),
           const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              text,
-              style: TextStyle(fontSize: 16, color: Colors.black87),
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(height: 4),
+              SizedBox(
+                width: 250,
+                child: Text(
+                  value,
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+              ),
+            ],
           ),
         ],
       ),

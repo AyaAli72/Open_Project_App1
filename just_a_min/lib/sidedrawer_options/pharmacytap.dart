@@ -7,8 +7,8 @@ class PharmacyTap_Page extends StatefulWidget {
 }
 
 class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
-  List<MedicineItem> _medicinesCategory1 = [];
-  List<MedicineItem> _medicinesCategory3 = [];
+  List<PharmacyItem> _medicinesCategory1 = [];
+  List<PharmacyItem> _medicinesCategory3 = [];
   List<MedicalEquipmentItem> _equipmentList = [];
   bool _isLoading = true;
   String? _errorMessage;
@@ -24,14 +24,14 @@ class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
       // Fetch pharmacy data
       final pharmacyData = await GoogleSheetsApi.getData(
         spreadsheetId: '1C5PoYWHCdwcAAGQVd9RJokLj3jPbrKGW-Byg7YJF85M',
-        range: 'Pharmacy!A2:D',
+        range: 'Pharmacy!A1:D',
       );
       final allMedicines = _parsePharmacySheetData(pharmacyData);
 
       // Fetch medical equipment data
       final equipmentData = await GoogleSheetsApi.getData(
         spreadsheetId: '1C5PoYWHCdwcAAGQVd9RJokLj3jPbrKGW-Byg7YJF85M',
-        range: 'Mediciens!A:D',
+        range: 'Mediciens!A1:E',
       );
       final equipment = _parseEquipmentSheetData(equipmentData);
 
@@ -51,18 +51,18 @@ class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
     }
   }
 
-  List<MedicineItem> _parsePharmacySheetData(List<List<String>> data) {
+  List<PharmacyItem> _parsePharmacySheetData(List<List<String>> data) {
     final rows = data.length > 1 ? data.sublist(1) : [];
 
     return rows.map((row) {
-      while (row.length < 4) row.add('');
+      while (row.length < 5) row.add('');
 
-      return MedicineItem(
+      return PharmacyItem(
         category: int.tryParse(row[0]) ?? 1,
         pharmacyName: row[0],
-        medicineName: row[1],
-        pharmacyPhone: row[2],
-        price: double.tryParse(row[3] ?? '0') ?? 0.0,
+        pharmacyEmail: row[2],
+        pharmacyPhone: row[1],
+        address: row[3],
       );
     }).toList();
   }
@@ -76,13 +76,14 @@ class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
       return MedicalEquipmentItem(
         equipmentName: row[0],
         description: row[1],
-        price: double.tryParse(row[2] ?? '0') ?? 0.0,
-        contactPhone: row[3],
+        price: double.tryParse(row[2]) ?? 0.0,
+        contactPhone: row[4],
+        pharmacyName: row[3],
       );
     }).toList();
   }
 
-  Widget _buildMedicineList(String title, List<MedicineItem> medicines) {
+  Widget _buildPharmacyList(String title, List<PharmacyItem> pharmacies) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -97,20 +98,20 @@ class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
         const SizedBox(height: 5),
         Container(
           height: 240,
-          child: medicines.isEmpty
+          child: pharmacies.isEmpty
               ? Center(child: Text('No $title available'))
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: medicines.length,
+                  itemCount: pharmacies.length,
                   itemBuilder: (context, index) {
-                    final medicine = medicines[index];
+                    final pharmacy = pharmacies[index];
                     return InkWell(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                MedicineDetailPage(medicine: medicine),
+                                PharmacyDetailPage(pharmacy: pharmacy),
                           ),
                         );
                       },
@@ -125,7 +126,7 @@ class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                medicine.medicineName,
+                                pharmacy.pharmacyName,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -133,12 +134,20 @@ class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              Text(
-                                medicine.pharmacyName,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.deepPurple,
-                                ),
+                              Row(
+                                children: [
+                                  Icon(Icons.email,
+                                      size: 16, color: Colors.red),
+                                  SizedBox(width: 4),
+                                  Expanded(
+                                    child: Text(
+                                      pharmacy.pharmacyEmail,
+                                      style: TextStyle(fontSize: 14),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(height: 8),
                               Row(
@@ -147,19 +156,10 @@ class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
                                       size: 16, color: Colors.green),
                                   SizedBox(width: 4),
                                   Text(
-                                    medicine.pharmacyPhone,
+                                    pharmacy.pharmacyPhone,
                                     style: TextStyle(fontSize: 14),
                                   ),
                                 ],
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                'Price: \$${medicine.price.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green,
-                                ),
                               ),
                             ],
                           ),
@@ -291,11 +291,11 @@ class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
                     child: Column(
                       children: [
                         const SizedBox(height: 12),
-                        _buildMedicineList('Pharmacies', _medicinesCategory1),
+                        _buildPharmacyList('Pharmacies', _medicinesCategory1),
                         const SizedBox(height: 12),
                         _buildEquipmentList(),
                         const SizedBox(height: 12),
-                        _buildMedicineList('Medicines', _medicinesCategory3),
+                        _buildPharmacyList('Medicines', _medicinesCategory3),
                         const SizedBox(height: 20),
                       ],
                     ),
@@ -305,19 +305,19 @@ class _PharmacyTap_PageState extends State<PharmacyTap_Page> {
   }
 }
 
-class MedicineItem {
+class PharmacyItem {
   final int category;
   final String pharmacyName;
-  final String medicineName;
+  final String pharmacyEmail;
   final String pharmacyPhone;
-  final double price;
+  final String address;
 
-  MedicineItem({
+  PharmacyItem({
     required this.category,
     required this.pharmacyName,
-    required this.medicineName,
+    required this.pharmacyEmail,
     required this.pharmacyPhone,
-    required this.price,
+    required this.address,
   });
 }
 
@@ -326,19 +326,21 @@ class MedicalEquipmentItem {
   final String description;
   final double price;
   final String contactPhone;
+  final String pharmacyName;
 
   MedicalEquipmentItem({
     required this.equipmentName,
     required this.description,
     required this.price,
     required this.contactPhone,
+    required this.pharmacyName,
   });
 }
 
-class MedicineDetailPage extends StatelessWidget {
-  final MedicineItem medicine;
+class PharmacyDetailPage extends StatelessWidget {
+  final PharmacyItem pharmacy;
 
-  MedicineDetailPage({required this.medicine});
+  PharmacyDetailPage({required this.pharmacy});
 
   @override
   Widget build(BuildContext context) {
@@ -346,7 +348,7 @@ class MedicineDetailPage extends StatelessWidget {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: Text(
-          medicine.medicineName,
+          pharmacy.pharmacyName,
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.blue,
@@ -366,18 +368,28 @@ class MedicineDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSectionHeader("Pharmacy"),
-                  _buildInfoRow(Icons.local_pharmacy, medicine.pharmacyName,
-                      Colors.deepPurple),
-                  _buildSectionHeader("Medicine"),
+                  _buildSectionHeader("Pharmacy Information"),
+                  SizedBox(
+                    height: 15,
+                  ),
                   _buildInfoRow(
-                      Icons.medication, medicine.medicineName, Colors.blue),
-                  _buildSectionHeader("Contact"),
-                  _buildInfoRow(
-                      Icons.phone, medicine.pharmacyPhone, Colors.green),
-                  _buildSectionHeader("Price"),
-                  _buildInfoRow(Icons.attach_money,
-                      '\$${medicine.price.toStringAsFixed(2)}', Colors.green),
+                      Icons.local_pharmacy, "Name", pharmacy.pharmacyName),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildSectionHeader("Contact Information"),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildInfoRow(Icons.email, "Email", pharmacy.pharmacyEmail),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildInfoRow(Icons.phone, "Phone", pharmacy.pharmacyPhone),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildInfoRow(Icons.location_on, "Address", pharmacy.address),
                 ],
               ),
             ),
@@ -401,17 +413,33 @@ class MedicineDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String text, Color iconColor) {
+  Widget _buildInfoRow(IconData icon, String label, String value) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Icon(icon, color: iconColor),
+          Icon(icon, color: Colors.blue),
           const SizedBox(width: 12),
           Expanded(
-            child: Text(
-              text,
-              style: TextStyle(fontSize: 16, color: Colors.black87),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -451,18 +479,39 @@ class EquipmentDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSectionHeader("Equipment"),
-                  _buildInfoRow(Icons.medical_services, equipment.equipmentName,
-                      Colors.blue),
-                  _buildSectionHeader("Description"),
+                  _buildSectionHeader("Equipment Information"),
+                  SizedBox(
+                    height: 15,
+                  ),
                   _buildInfoRow(
-                      Icons.description, equipment.description, Colors.grey),
+                      Icons.medical_services, "Name", equipment.equipmentName),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildSectionHeader("Details"),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildInfoRow(
+                      Icons.description, "Description", equipment.description),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildInfoRow(Icons.attach_money, "Price",
+                      '\$${equipment.price.toStringAsFixed(2)}'),
+                  SizedBox(
+                    height: 15,
+                  ),
                   _buildSectionHeader("Contact"),
-                  _buildInfoRow(
-                      Icons.phone, equipment.contactPhone, Colors.green),
-                  _buildSectionHeader("Price"),
-                  _buildInfoRow(Icons.attach_money,
-                      '\$${equipment.price.toStringAsFixed(2)}', Colors.green),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildInfoRow(Icons.phone, "Phone", equipment.contactPhone),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _buildInfoRow(Icons.local_pharmacy, "Pharmacy Name",
+                      equipment.pharmacyName),
                 ],
               ),
             ),
@@ -486,17 +535,33 @@ class EquipmentDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String text, Color iconColor) {
+  Widget _buildInfoRow(IconData icon, String label, String value) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Icon(icon, color: iconColor),
+          Icon(icon, color: Colors.blue),
           const SizedBox(width: 12),
           Expanded(
-            child: Text(
-              text,
-              style: TextStyle(fontSize: 16, color: Colors.black87),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
