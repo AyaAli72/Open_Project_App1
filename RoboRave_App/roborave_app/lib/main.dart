@@ -36,9 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 173, 53, 45),
+        backgroundColor: const Color.fromARGB(255, 173, 53, 45),
         title: Text(
-          "RoboRave Egypt Competation Results",
+          "RoboRave Egypt Competition Results",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -50,15 +50,22 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
+            // Challenge Result Button with Trophy Icon
+            ElevatedButton.icon(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ChallengeResultPage()));
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChallengeResultPage()),
+                );
               },
-              child: Text(
-                "All Challeges Result",
+              icon: Icon(
+                Icons.emoji_events,
+                size: 36,
+                color: Colors.white,
+              ), // Trophy icon
+              label: Text(
+                "All Challenges Result",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
@@ -73,20 +80,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            SizedBox(height: 50, width: 50),
-            ElevatedButton(
+
+            SizedBox(height: 50),
+
+            // Team Result Button with Group Icon
+            ElevatedButton.icon(
               onPressed: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TeamResultPage()));
+                  context,
+                  MaterialPageRoute(builder: (context) => TeamResultPage()),
+                );
               },
-              child: Text(
+              icon: Icon(
+                Icons.group,
+                size: 36,
+                color: Colors.white,
+              ), // Group icon
+              label: Text(
                 "Team Result",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: 69, vertical: 30),

@@ -27,7 +27,7 @@ class _FireFighterMSPageState extends State<FireFighterMSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'FireFighter!A3:D21'; // Updated to include Team Name column
+      const range = 'FireFighter!A3:D16'; // Updated to include Team Name column
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -79,11 +79,8 @@ class _FireFighterMSPageState extends State<FireFighterMSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -96,7 +93,6 @@ class _FireFighterMSPageState extends State<FireFighterMSPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();
@@ -129,7 +125,7 @@ class _FireFighterHSPageState extends State<FireFighterHSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'FireFighter!F3:I21'; // Updated range for HS
+      const range = 'FireFighter!F3:I16'; // Updated range for HS
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -180,11 +176,8 @@ class _FireFighterHSPageState extends State<FireFighterHSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -197,7 +190,6 @@ class _FireFighterHSPageState extends State<FireFighterHSPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();
@@ -230,7 +222,7 @@ class _FireFighterUPPageState extends State<FireFighterUPPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'FireFighter!K3:N21'; // Updated range for UP
+      const range = 'FireFighter!K3:N16'; // Updated range for UP
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -281,11 +273,8 @@ class _FireFighterUPPageState extends State<FireFighterUPPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -298,7 +287,6 @@ class _FireFighterUPPageState extends State<FireFighterUPPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();

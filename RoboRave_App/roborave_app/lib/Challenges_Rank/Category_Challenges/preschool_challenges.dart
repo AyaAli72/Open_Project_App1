@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '/googlesheetapi.dart';
 
-class SumoCupMSPage extends StatefulWidget {
-  const SumoCupMSPage({super.key});
+class PreschoolWispyPage extends StatefulWidget {
+  const PreschoolWispyPage({super.key});
 
   @override
-  State<SumoCupMSPage> createState() => _SumoCupMSPageState();
+  State<PreschoolWispyPage> createState() => _PreschoolWispyPageState();
 }
 
-class _SumoCupMSPageState extends State<SumoCupMSPage> {
+class _PreschoolWispyPageState extends State<PreschoolWispyPage> {
   List<List<String>> sheetData = [];
   bool isLoading = true;
   String errorMessage = '';
@@ -27,7 +27,7 @@ class _SumoCupMSPageState extends State<SumoCupMSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'SumoCup!A3:D16';
+      const range = 'Preschool!A3:D16'; // Updated to 4 columns
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -45,7 +45,9 @@ class _SumoCupMSPageState extends State<SumoCupMSPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Sumo Cup MS Challenge")),
+      appBar: AppBar(
+          title:
+              const Text("Preschool Wispy Challenge")), // Fixed title spacing
       body: _buildBody(),
     );
   }
@@ -75,9 +77,8 @@ class _SumoCupMSPageState extends State<SumoCupMSPage> {
           label:
               Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label:
             Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -87,7 +88,7 @@ class _SumoCupMSPageState extends State<SumoCupMSPage> {
   }
 
   List<DataRow> _buildRows() {
-    return sheetData.where((row) => row.length >= 3).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
         cells: [
           DataCell(Text(row[0].toString())),
@@ -99,14 +100,15 @@ class _SumoCupMSPageState extends State<SumoCupMSPage> {
   }
 }
 
-class SumoCupHSPage extends StatefulWidget {
-  const SumoCupHSPage({super.key});
+class PreschoolMazesolverPage extends StatefulWidget {
+  const PreschoolMazesolverPage({super.key});
 
   @override
-  State<SumoCupHSPage> createState() => _SumoCupHSPageState();
+  State<PreschoolMazesolverPage> createState() =>
+      _PreschoolMazesolverPageState();
 }
 
-class _SumoCupHSPageState extends State<SumoCupHSPage> {
+class _PreschoolMazesolverPageState extends State<PreschoolMazesolverPage> {
   List<List<String>> sheetData = [];
   bool isLoading = true;
   String errorMessage = '';
@@ -125,7 +127,7 @@ class _SumoCupHSPageState extends State<SumoCupHSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'SumoCup!F3:I16';
+      const range = 'Preschool!F3:I16';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -143,7 +145,8 @@ class _SumoCupHSPageState extends State<SumoCupHSPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Sumo Cup HS Challenge")),
+      appBar: AppBar(
+          title: const Text("PreSchool Maze Solver Challenge")), // Fixed title
       body: _buildBody(),
     );
   }
@@ -173,9 +176,8 @@ class _SumoCupHSPageState extends State<SumoCupHSPage> {
           label:
               Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label:
             Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -185,7 +187,7 @@ class _SumoCupHSPageState extends State<SumoCupHSPage> {
   }
 
   List<DataRow> _buildRows() {
-    return sheetData.where((row) => row.length >= 3).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
         cells: [
           DataCell(Text(row[0].toString())),
@@ -197,14 +199,16 @@ class _SumoCupHSPageState extends State<SumoCupHSPage> {
   }
 }
 
-class SumoCupUPPage extends StatefulWidget {
-  const SumoCupUPPage({super.key});
+class PreschoolCleaverBuilderPage extends StatefulWidget {
+  const PreschoolCleaverBuilderPage({super.key});
 
   @override
-  State<SumoCupUPPage> createState() => _SumoCupUPPageState();
+  State<PreschoolCleaverBuilderPage> createState() =>
+      _PreschoolCleaverBuilderPageState();
 }
 
-class _SumoCupUPPageState extends State<SumoCupUPPage> {
+class _PreschoolCleaverBuilderPageState
+    extends State<PreschoolCleaverBuilderPage> {
   List<List<String>> sheetData = [];
   bool isLoading = true;
   String errorMessage = '';
@@ -223,7 +227,7 @@ class _SumoCupUPPageState extends State<SumoCupUPPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'SumoCup!K3:N16';
+      const range = 'Preschool!K3:N16';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -241,7 +245,9 @@ class _SumoCupUPPageState extends State<SumoCupUPPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Sumo Cup UP Challenge")),
+      appBar: AppBar(
+          title:
+              const Text("PreSchool Cleaver Builder Challenge")), // Fixed title
       body: _buildBody(),
     );
   }
@@ -271,9 +277,8 @@ class _SumoCupUPPageState extends State<SumoCupUPPage> {
           label:
               Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
+          label:
+              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
         label:
             Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -283,7 +288,7 @@ class _SumoCupUPPageState extends State<SumoCupUPPage> {
   }
 
   List<DataRow> _buildRows() {
-    return sheetData.where((row) => row.length >= 3).map((row) {
+    return sheetData.where((row) => row.length >= 4).map((row) {
       return DataRow(
         cells: [
           DataCell(Text(row[0].toString())),

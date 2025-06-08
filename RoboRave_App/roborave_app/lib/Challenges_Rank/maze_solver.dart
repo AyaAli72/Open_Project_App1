@@ -22,18 +22,20 @@ class _MazeSolverPageState extends State<MazeSolverPage> {
   final List<String> challenges = [
     'Maze Solver MS',
     'Maze Solver ES',
+    'Maze Solver ES Manual',
   ];
 
   void navigateToChallenge(String value) {
     final pages = {
       'Maze Solver MS': const MazeSolverMSPage(),
-      'Maze Solver ES': const MazeSolverESPage(),
+      'Maze Solver ES Manual': const MazeSolverESManualPage(),
+      'Maze Solver ES ': const MazeSolverESPage(),
     };
 
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => pages[value] ?? const MazeSolverMSPage()),
+          builder: (context) => pages[value] ?? const MazeSolverESPage()),
     );
   }
 

@@ -27,7 +27,7 @@ class _AirplineMSPageState extends State<AirplineMSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Airpline!A3:D21'; // Updated to include Team Name column
+      const range = 'Airpline!A3:D16'; // Updated to include Team Name column
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -78,11 +78,8 @@ class _AirplineMSPageState extends State<AirplineMSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -95,7 +92,6 @@ class _AirplineMSPageState extends State<AirplineMSPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();
@@ -128,7 +124,7 @@ class _AirplineHSPageState extends State<AirplineHSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Airpline!F3:I21'; // Updated range for HS
+      const range = 'Airpline!F3:I16'; // Updated range for HS
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -179,11 +175,8 @@ class _AirplineHSPageState extends State<AirplineHSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -196,7 +189,6 @@ class _AirplineHSPageState extends State<AirplineHSPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();
@@ -229,7 +221,7 @@ class _AirplineUPPageState extends State<AirplineUPPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Airpline!K3:N21'; // Updated range for UP
+      const range = 'Airpline!K3:N16'; // Updated range for UP
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -280,11 +272,8 @@ class _AirplineUPPageState extends State<AirplineUPPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -297,7 +286,6 @@ class _AirplineUPPageState extends State<AirplineUPPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();

@@ -39,13 +39,13 @@ class _ChallengeResultPageState extends State<ChallengeResultPage> {
 
   void navigateToChallenge(String value) {
     final pages = {
-      'Sumo Cup MS': const SumoCupPage(),
+      'Sumo Cup': const SumoCupPage(),
       'Maze Solver': const MazeSolverPage(),
       'Fire Fighter': const FireFighterPage(),
       'Line Follower': const LineFollowerPage(),
       'Airpline': const AirplinePage(),
       'Fastbot': const FastbotPage(),
-      'Preshcool': const PreschoolPage(),
+      'Preshcool': const PreSchoolPage(),
       'Enterpreneurs': const EnterpreneursPage(),
     };
 
@@ -99,7 +99,7 @@ class _ChallengeResultPageState extends State<ChallengeResultPage> {
                 ElevatedButton(
                   onPressed: () => navigateToChallenge(selectedOption),
                   child: const Text(
-                    "Go to Challenge Rank",
+                    "Go to Challenge Category",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,

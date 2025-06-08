@@ -27,7 +27,7 @@ class _EnterpreneursMSPageState extends State<EnterpreneursMSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!A3:D21';
+      const range = 'Enterpreneurs!A3:D16';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -79,11 +79,8 @@ class _EnterpreneursMSPageState extends State<EnterpreneursMSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -96,7 +93,6 @@ class _EnterpreneursMSPageState extends State<EnterpreneursMSPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();
@@ -129,7 +125,7 @@ class _EnterpreneursHSPageState extends State<EnterpreneursHSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!F3:I21'; // Fixed range to match 4 columns
+      const range = 'Enterpreneurs!F3:I16'; // Fixed range to match 4 columns
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -181,11 +177,8 @@ class _EnterpreneursHSPageState extends State<EnterpreneursHSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -198,7 +191,6 @@ class _EnterpreneursHSPageState extends State<EnterpreneursHSPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();
@@ -231,7 +223,7 @@ class _EnterpreneursESPageState extends State<EnterpreneursESPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!K3:N21';
+      const range = 'Enterpreneurs!K3:N16';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -283,11 +275,8 @@ class _EnterpreneursESPageState extends State<EnterpreneursESPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -300,7 +289,6 @@ class _EnterpreneursESPageState extends State<EnterpreneursESPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();
@@ -333,7 +321,7 @@ class _EnterpreneursUPPageState extends State<EnterpreneursUPPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Enterpreneurs!P2:S21';
+      const range = 'Enterpreneurs!P3:S16';
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -385,11 +373,8 @@ class _EnterpreneursUPPageState extends State<EnterpreneursUPPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -402,7 +387,6 @@ class _EnterpreneursUPPageState extends State<EnterpreneursUPPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();

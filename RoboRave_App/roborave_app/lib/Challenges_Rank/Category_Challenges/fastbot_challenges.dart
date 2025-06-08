@@ -28,7 +28,7 @@ class _FastbotMSPageState extends State<FastbotMSPage> {
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
       const range =
-          'Fastbot!A3:D21'; // Changed from 'FastBot' to 'Fastbot' for consistency
+          'Fastbot!A3:D16'; // Changed from 'FastBot' to 'Fastbot' for consistency
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -85,11 +85,8 @@ class _FastbotMSPageState extends State<FastbotMSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -104,7 +101,6 @@ class _FastbotMSPageState extends State<FastbotMSPage> {
           DataCell(Text(row[0])),
           DataCell(Text(row[1])),
           DataCell(Text(row[2])),
-          DataCell(Text(row[3])),
         ],
       );
     }).toList();
@@ -137,7 +133,7 @@ class _FastbotHSPageState extends State<FastbotHSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Fastbot!F3:I21'; // Changed from 'FastBot' to 'Fastbot'
+      const range = 'Fastbot!F3:I16'; // Changed from 'FastBot' to 'Fastbot'
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -194,11 +190,8 @@ class _FastbotHSPageState extends State<FastbotHSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -213,7 +206,6 @@ class _FastbotHSPageState extends State<FastbotHSPage> {
           DataCell(Text(row[0])),
           DataCell(Text(row[1])),
           DataCell(Text(row[2])),
-          DataCell(Text(row[3])),
         ],
       );
     }).toList();
@@ -246,7 +238,7 @@ class _FastbotESPageState extends State<FastbotESPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Fastbot!K3:N21'; // Changed from 'FastBot' to 'Fastbot'
+      const range = 'Fastbot!K3:N16'; // Changed from 'FastBot' to 'Fastbot'
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -304,11 +296,8 @@ class _FastbotESPageState extends State<FastbotESPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -323,7 +312,6 @@ class _FastbotESPageState extends State<FastbotESPage> {
           DataCell(Text(row[0])),
           DataCell(Text(row[1])),
           DataCell(Text(row[2])),
-          DataCell(Text(row[3])),
         ],
       );
     }).toList();

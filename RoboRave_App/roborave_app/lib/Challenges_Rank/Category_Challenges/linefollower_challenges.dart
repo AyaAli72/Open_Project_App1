@@ -28,7 +28,7 @@ class _LineFollowerMSPageState extends State<LineFollowerMSPage> {
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
       const range =
-          'LineFollower!A3:D21'; // Updated to include Team Name column
+          'LineFollower!A3:D16'; // Updated to include Team Name column
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -79,11 +79,8 @@ class _LineFollowerMSPageState extends State<LineFollowerMSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -96,7 +93,6 @@ class _LineFollowerMSPageState extends State<LineFollowerMSPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();
@@ -129,7 +125,7 @@ class _LineFollowerHSPageState extends State<LineFollowerHSPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'LineFollower!F3:I21'; // Updated range for HS
+      const range = 'LineFollower!F3:I16'; // Updated range for HS
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -180,11 +176,8 @@ class _LineFollowerHSPageState extends State<LineFollowerHSPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -197,7 +190,6 @@ class _LineFollowerHSPageState extends State<LineFollowerHSPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();
@@ -230,7 +222,7 @@ class _LineFollowerESPageState extends State<LineFollowerESPage> {
       });
 
       const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'LineFollower!K3:N21'; // Updated range for ES
+      const range = 'LineFollower!K3:N16'; // Updated range for ES
 
       final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
       setState(() {
@@ -281,11 +273,8 @@ class _LineFollowerESPageState extends State<LineFollowerESPage> {
           label:
               Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
       DataColumn(
-        label: Text('Rank', style: TextStyle(fontWeight: FontWeight.bold)),
-        numeric: true,
-      ),
-      DataColumn(
-        label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold)),
+        label:
+            Text('Highest Rank', style: TextStyle(fontWeight: FontWeight.bold)),
         numeric: true,
       ),
     ];
@@ -298,7 +287,6 @@ class _LineFollowerESPageState extends State<LineFollowerESPage> {
           DataCell(Text(row[0].toString())),
           DataCell(Text(row[1].toString())),
           DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
         ],
       );
     }).toList();

@@ -1,103 +1,104 @@
 import 'package:flutter/material.dart';
-import '/googlesheetapi.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'Category_Challenges/preschool_challenges.dart';
 
-class PreschoolPage extends StatefulWidget {
-  const PreschoolPage({super.key});
-
-  @override
-  State<PreschoolPage> createState() => _PreschoolPageState();
+Future<void> main() async {
+  await dotenv.load(fileName: '.env');
+  runApp(const MaterialApp(
+    home: PreSchoolPage(),
+    debugShowCheckedModeBanner: false,
+  ));
 }
 
-class _PreschoolPageState extends State<PreschoolPage> {
-  List<List<String>> sheetData = [];
-  bool isLoading = true;
-  String errorMessage = '';
+class PreSchoolPage extends StatefulWidget {
+  const PreSchoolPage({super.key});
 
   @override
-  void initState() {
-    super.initState();
-    _fetchSheetData();
-  }
+  State<PreSchoolPage> createState() => _PreSchoolPageState();
+}
 
-  Future<void> _fetchSheetData() async {
-    try {
-      setState(() {
-        isLoading = true;
-        errorMessage = '';
-      });
+class _PreSchoolPageState extends State<PreSchoolPage> {
+  String selectedOption = 'PreSchool Wispy';
+  final List<String> challenges = [
+    'PreSchool Wispy',
+    'PreSchool Maze Solver',
+    'PreSchool Cleaver Builder',
+  ];
 
-      const spreadsheetId = '1T7ZFHehD9cv6nxvqYxAKVL4QlYM512gYCnKj9EbkCic';
-      const range = 'Preschool!A3:D21';
+  void navigateToChallenge(String value) {
+    final pages = {
+      'PreSchool Wispy': const PreschoolWispyPage(),
+      'PreSchool Maze Solver': const PreschoolMazesolverPage(),
+      'PreSchool Cleaver Builder': const PreschoolCleaverBuilderPage(),
+    };
 
-      final data = await GoogleSheetsApi.getSheetData(spreadsheetId, range);
-      setState(() {
-        sheetData = data;
-        isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Error loading data: $e';
-        isLoading = false;
-      });
-    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => pages[value] ?? const PreschoolWispyPage()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Preschool Challenge")),
-      body: _buildBody(),
-    );
-  }
-
-  Widget _buildBody() {
-    if (isLoading) return const Center(child: CircularProgressIndicator());
-    if (errorMessage.isNotEmpty) return Center(child: Text(errorMessage));
-    return _buildDataTable();
-  }
-
-  Widget _buildDataTable() {
-    if (sheetData.isEmpty)
-      return const Center(child: Text("No data available"));
-
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: DataTable(
-        columns: _buildColumns(),
-        rows: _buildRows(),
+      appBar: AppBar(
+        title: const Text(
+          "Challenges Rank Page",
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color.fromARGB(255, 160, 27, 17),
       ),
-    );
-  }
-
-  List<DataColumn> _buildColumns() {
-    return const [
-      DataColumn(
-          label:
-              Text('Team Code', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(
-          label:
-              Text('Team Name', style: TextStyle(fontWeight: FontWeight.bold))),
-      DataColumn(
-        label: Text(
-          'Rank',
-          style: TextStyle(fontWeight: FontWeight.bold),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                DropdownButton<String>(
+                  value: selectedOption,
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      setState(() => selectedOption = newValue);
+                    }
+                  },
+                  dropdownColor: Colors.white,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  items:
+                      challenges.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () => navigateToChallenge(selectedOption),
+                  child: const Text(
+                    "Go to Challenge Rank",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 160, 27, 17),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-      DataColumn(
-          label: Text('Round', style: TextStyle(fontWeight: FontWeight.bold))),
-    ];
-  }
-
-  List<DataRow> _buildRows() {
-    return sheetData.where((row) => row.length >= 3).map((row) {
-      return DataRow(
-        cells: [
-          DataCell(Text(row[0].toString())),
-          DataCell(Text(row[1].toString())),
-          DataCell(Text(row[2].toString())),
-          DataCell(Text(row[3].toString())),
-        ],
-      );
-    }).toList();
+    );
   }
 }
