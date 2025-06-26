@@ -84,22 +84,22 @@ class _HomePageState extends State<HomePage> {
       String details = rowData.length > 3 ? rowData[3] : '';
 
       // Parse image URL
-      String imageUrl = rowData.length > 4 ? rowData[4] : '';
+      String imageUrl = rowData.length > 4 ? rowData[7] : '';
 
       // Parse user info
-      String userName = rowData.length > 5 ? rowData[5] : 'No Name';
-      String userAddress = rowData.length > 6 ? rowData[6] : 'No Address';
-      String userPhone = rowData.length > 7 ? rowData[7] : 'No Phone';
+      String userName = rowData.length > 5 ? rowData[4] : 'No Name';
+      String userAddress = rowData.length > 6 ? rowData[5] : 'No Address';
+      String userPhone = rowData.length > 7 ? rowData[6] : 'No Phone';
 
       return MaterialItem(
         name: name,
         price: price,
         amount: amount,
         details: details,
-        imageUrl: imageUrl,
         userName: userName,
         userAddress: userAddress,
         userPhone: userPhone,
+        imageUrl: imageUrl,
       );
     }).toList();
   }

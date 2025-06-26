@@ -18,9 +18,8 @@ class _TeamResultPageState extends State<TeamResultPage> {
   String selectedOption = ''; // Will be initialized in initState
 
   final List<String> challenges = [
-    'Sumo Cup MS',
-    'Sumo Cup HS',
-    'Sumo Cup UP',
+    'Sumo Cup 1 KG',
+    'Sumo Cup 1.5 KG',
     'Maze Solver MS',
     'Maze Solver ES',
     'Maze Solver ES Manual',
@@ -46,9 +45,8 @@ class _TeamResultPageState extends State<TeamResultPage> {
   ];
 
   final Map<String, String> challengeRanges = {
-    'Sumo Cup MS': 'SumoCup!A3:D16',
-    'Sumo Cup HS': 'SumoCup!F3:I16',
-    'Sumo Cup UP': 'SumoCup!K3:N16',
+    'Sumo Cup 1 KG': 'SumoCup!A3:D16',
+    'Sumo Cup 1.5 KG': 'SumoCup!F3:I16',
     'Maze Solver MS': 'A_Maze!K3:N16',
     'Maze Solver ES': 'A_Maze!F3:I16',
     'Maze Solver ES Manual': 'A_Maze!A3:D16',

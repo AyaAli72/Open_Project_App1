@@ -16,6 +16,13 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
       TextEditingController();
   final TextEditingController _materialPriceController =
       TextEditingController();
+  final TextEditingController _materialusernameController =
+      TextEditingController();
+  final TextEditingController _materialuseraddressController =
+      TextEditingController();
+  final TextEditingController _materialuserphoneController =
+      TextEditingController();
+  final TextEditingController _materialnameController = TextEditingController();
   bool _isLoading = false;
   bool _addAnotherMaterial = false;
   File? _imageFile;
@@ -36,6 +43,10 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
     _materialDetailsController.dispose();
     _materialAmountController.dispose();
     _materialPriceController.dispose();
+    _materialusernameController.dispose();
+    _materialuseraddressController.dispose();
+    _materialuserphoneController.dispose();
+    _materialnameController.dispose();
     super.dispose();
   }
 
@@ -43,6 +54,10 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
     _materialDetailsController.clear();
     _materialAmountController.clear();
     _materialPriceController.clear();
+    _materialusernameController.clear();
+    _materialuseraddressController.clear();
+    _materialuserphoneController.clear();
+    _materialnameController.clear();
     _addAnotherMaterial = false;
   }
 
@@ -50,14 +65,21 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
     if (_isLoading) return;
 
     setState(() => _isLoading = true);
-
+    final name = _materialnameController.text.trim();
     final materialDetails = _materialDetailsController.text.trim();
     final materialAmount = _materialAmountController.text.trim();
     final materialPrice = _materialPriceController.text.trim();
+    final username = _materialusernameController.text.trim();
+    final address = _materialuseraddressController.text.trim();
+    final phone = _materialuserphoneController.text.trim();
 
-    if (materialDetails.isEmpty ||
+    if (name.isEmpty ||
+        materialDetails.isEmpty ||
         materialAmount.isEmpty ||
-        materialPrice.isEmpty) {
+        materialPrice.isEmpty ||
+        username.isEmpty ||
+        address.isEmpty ||
+        phone.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please fill in all fields.")),
       );
@@ -74,9 +96,13 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
         spreadsheetId: spreadsheetId,
         sheetName: sheetName,
         rowData: [
+          name,
           materialDetails,
           materialAmount,
           materialPrice,
+          username,
+          address,
+          phone,
           DateTime.now().toString(),
         ],
       );
@@ -104,7 +130,10 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
   Future<bool> _confirmBackNavigation() async {
     if (_materialDetailsController.text.isEmpty &&
         _materialAmountController.text.isEmpty &&
-        _materialPriceController.text.isEmpty) {
+        _materialPriceController.text.isEmpty &&
+        _materialusernameController.text.isEmpty &&
+        _materialuseraddressController.text.isEmpty &&
+        _materialuserphoneController.text.isEmpty) {
       return true;
     }
 
@@ -194,6 +223,16 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
           child: Column(
             children: [
               TextField(
+                controller: _materialnameController,
+                decoration: InputDecoration(
+                  labelText: 'Material Name',
+                  prefixIcon: Icon(Icons.perm_identity),
+                  border: OutlineInputBorder(),
+                ),
+                maxLines: 2,
+              ),
+              SizedBox(height: 20),
+              TextField(
                 controller: _materialDetailsController,
                 decoration: InputDecoration(
                   labelText: 'Material Details',
@@ -228,7 +267,7 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: _materialPriceController,
+                controller: _materialusernameController,
                 decoration: InputDecoration(
                   labelText: 'User Name',
                   prefixIcon: Icon(Icons.person),
@@ -237,7 +276,7 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: _materialPriceController,
+                controller: _materialuseraddressController,
                 decoration: InputDecoration(
                   labelText: 'User Address',
                   prefixIcon: Icon(Icons.location_on),
@@ -246,12 +285,16 @@ class _AddMaterialPageState extends State<AddMaterialPage> {
               ),
               const SizedBox(height: 20),
               TextField(
-                controller: _materialPriceController,
+                controller: _materialuserphoneController,
                 decoration: InputDecoration(
                   labelText: 'User Phone',
                   prefixIcon: Icon(Icons.phone),
                   border: OutlineInputBorder(),
                 ),
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,11}')),
+                ],
               ),
               const SizedBox(height: 20),
               Row(

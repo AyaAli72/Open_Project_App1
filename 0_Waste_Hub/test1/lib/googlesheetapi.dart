@@ -61,7 +61,7 @@ class GoogleSheetsApi {
       await sheets.spreadsheets.values.append(
         valueRange,
         spreadsheetId,
-        '$sheetName!A3:F', // Append to any column in the sheet
+        '$sheetName!A3:H', // Append to any column in the sheet
         valueInputOption: 'USER_ENTERED',
         insertDataOption: 'INSERT_ROWS',
       );

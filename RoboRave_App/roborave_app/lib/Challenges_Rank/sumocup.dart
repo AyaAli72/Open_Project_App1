@@ -18,18 +18,17 @@ class SumoCupPage extends StatefulWidget {
 }
 
 class _SumoCupPageState extends State<SumoCupPage> {
-  String selectedOption = 'Sumo Cup MS';
+  String selectedOption = 'Sumo Cup 1 KG';
   final List<String> challenges = [
-    'Sumo Cup MS',
-    'Sumo Cup HS',
-    'Sumo Cup UP',
+    'Sumo Cup 1 KG',
+    'Sumo Cup 1.5 KG',
+    // 'Sumo Cup UP',
   ];
 
   void navigateToChallenge(String value) {
     final pages = {
-      'Sumo Cup MS': const SumoCupMSPage(),
-      'Sumo Cup HS': const SumoCupHSPage(),
-      'Sumo Cup UP': const SumoCupUPPage(),
+      'Sumo Cup 1 KG': const SumoCupMSPage(),
+      'Sumo Cup 1.5 KG': const SumoCupHSPage(),
     };
 
     Navigator.push(
