@@ -117,6 +117,7 @@ class _SignInPageState extends State<SignInPage> {
                 decoration: const InputDecoration(
                   labelText: "Full Name",
                   border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.person),
                 ),
                 validator: (value) =>
                     value?.isEmpty ?? true ? 'Please enter your name' : null,
@@ -129,6 +130,7 @@ class _SignInPageState extends State<SignInPage> {
                 decoration: const InputDecoration(
                   labelText: "Age",
                   border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.cake),
                 ),
                 validator: (value) {
                   if (value?.isEmpty ?? true) return 'Please enter your age';
@@ -148,6 +150,7 @@ class _SignInPageState extends State<SignInPage> {
                 decoration: const InputDecoration(
                   labelText: "Phone Number",
                   border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.phone),
                   prefixText: '+20 ',
                 ),
                 validator: (value) {
@@ -164,6 +167,7 @@ class _SignInPageState extends State<SignInPage> {
                 decoration: const InputDecoration(
                   labelText: 'Gender',
                   border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.wc),
                 ),
                 items: genders.map<DropdownMenuItem<String>>((String gender) {
                   return DropdownMenuItem<String>(
@@ -174,7 +178,6 @@ class _SignInPageState extends State<SignInPage> {
                 validator: (value) =>
                     value == null ? 'Please select gender' : null,
               ),
-            
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,

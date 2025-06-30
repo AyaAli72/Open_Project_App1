@@ -21,11 +21,11 @@ class _ASDPageState extends State<ASDPage> {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
-            _buildSection(title: 'Courses'),
+            _buildSection(title: 'LearningCourses'),
             const SizedBox(height: 20),
-            _buildSection(title: 'Data'),
+            _buildSection(title: 'Therapists Data'),
             const SizedBox(height: 20),
-            _buildSection(title: 'Helper'),
+            _buildSection(title: 'Therapists Sessions'),
           ],
         ),
       ),

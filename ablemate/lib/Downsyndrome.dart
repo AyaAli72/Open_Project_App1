@@ -19,11 +19,11 @@ class DownPage extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
-            _buildSection(title: 'Courses'),
+            _buildSection(title: ' Learning Courses'),
             const SizedBox(height: 20),
-            _buildSection(title: 'Data'),
+            _buildSection(title: 'Therapists Session'),
             const SizedBox(height: 20),
-            _buildSection(title: 'Helper'),
+            _buildSection(title: 'Therapists Data'),
           ],
         ),
       ),
