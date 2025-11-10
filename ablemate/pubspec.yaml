@@ -35,6 +35,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icons/icon1.png
 
   # Example for adding custom fonts (optional)
   # fonts:
@@ -45,7 +46,7 @@ flutter:
   #         weight: 700
 
 # Optional: launcher icons configuration (if using flutter_launcher_icons)
-# flutter_icons:
-#   android: true
-#   ios: true
-#   image_path: "assets/images/app_icon.png"
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/icon1.png"
